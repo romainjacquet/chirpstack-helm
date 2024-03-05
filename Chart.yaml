@@ -6,7 +6,12 @@ keywords:
   - chirpstack
 sources:
 home:
+dependencies:
+  - name: kargo
+    version: 1.0.5
+    repository: oci://harbor.portal.kalisio.com/kalisio/helm    
 maintainers:
-- name: Kalisio
-  url: https://kalisio.com/
+  - name: Kalisio
+    email: contact@kalisio.com
+    url: https://kalisio.com/
 icon: https://www.chirpstack.io/img/logo.png
