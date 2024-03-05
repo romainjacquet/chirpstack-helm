@@ -42,14 +42,14 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /etc/chirpstack
-              name: chirpstack-claim0
+              name: vchirpstack-config
             - mountPath: /opt/lorawan-devices
               name: chirpstack-claim1
       restartPolicy: Always
       volumes:
-        - name: chirpstack-claim0
-          persistentVolumeClaim:
-            claimName: chirpstack-claim0
+        - name: vchirpstack-config
+          configMap:
+            name: chirpstack-config
         - name: chirpstack-claim1
           persistentVolumeClaim:
             claimName: chirpstack-claim1
