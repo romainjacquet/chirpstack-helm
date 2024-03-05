@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert -c
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: chirpstack-rest-api
+  name: chirpstack-rest-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chirpstack-rest-api
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert -c
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/chirpstack-kompose-default: "true"
+        io.kompose.service: chirpstack-rest-api
+    spec:
+      containers:
+        - args:
+            - --server
+            - chirpstack:8080
+            - --bind
+            - 0.0.0.0:8090
+            - --insecure
+          image: chirpstack/chirpstack-rest-api:4
+          name: chirpstack-rest-api
+          ports:
+            - containerPort: 8090
+              hostPort: 8090
+              protocol: TCP
+      restartPolicy: Always

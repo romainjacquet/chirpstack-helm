@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert -c
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: chirpstack-gateway-bridge
+  name: chirpstack-gateway-bridge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chirpstack-gateway-bridge
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert -c
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/chirpstack-kompose-default: "true"
+        io.kompose.service: chirpstack-gateway-bridge
+    spec:
+      containers:
+        - env:
+            - name: INTEGRATION__MQTT__COMMAND_TOPIC_TEMPLATE
+              value: eu868/gateway/{{ .GatewayID }}/command/#
+            - name: INTEGRATION__MQTT__EVENT_TOPIC_TEMPLATE
+              value: eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}
+            - name: INTEGRATION__MQTT__STATE_TOPIC_TEMPLATE
+              value: eu868/gateway/{{ .GatewayID }}/state/{{ .StateType }}
+          image: chirpstack/chirpstack-gateway-bridge:4
+          name: chirpstack-gateway-bridge
+          ports:
+            - containerPort: 1700
+              hostPort: 1700
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /etc/chirpstack-gateway-bridge
+              name: chirpstack-gateway-bridge-claim0
+      restartPolicy: Always
+      volumes:
+        - name: chirpstack-gateway-bridge-claim0
+          persistentVolumeClaim:
+            claimName: chirpstack-gateway-bridge-claim0

@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file ../docker-compose.yml convert -c
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: chirpstack
+  name: chirpstack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chirpstack
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose --file ../docker-compose.yml convert -c
+        kompose.version: 1.32.0 (765fde254)
+      labels:
+        io.kompose.network/chirpstack-kompose-default: "true"
+        io.kompose.service: chirpstack
+    spec:
+      containers:
+        - args:
+            - -c
+            - /etc/chirpstack
+          env:
+            - name: MQTT_BROKER_HOST
+              value: mosquitto
+            - name: POSTGRESQL_HOST
+              value: postgres
+            - name: REDIS_HOST
+              value: redis
+          image: chirpstack/chirpstack:4
+          name: chirpstack
+          ports:
+            - containerPort: 8080
+              hostPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/chirpstack
+              name: chirpstack-claim0
+            - mountPath: /opt/lorawan-devices
+              name: chirpstack-claim1
+      restartPolicy: Always
+      volumes:
+        - name: chirpstack-claim0
+          persistentVolumeClaim:
+            claimName: chirpstack-claim0
+        - name: chirpstack-claim1
+          persistentVolumeClaim:
+            claimName: chirpstack-claim1
