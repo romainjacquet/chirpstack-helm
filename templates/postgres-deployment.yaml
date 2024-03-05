@@ -40,8 +40,8 @@ spec:
       restartPolicy: Always
       volumes:
         - name: postgres-claim0
-          persistentVolumeClaim:
-            claimName: postgres-claim0
+          configMap:
+            name: postgres-initscripts
         - name: postgresqldata
           persistentVolumeClaim:
             claimName: postgresqldata
