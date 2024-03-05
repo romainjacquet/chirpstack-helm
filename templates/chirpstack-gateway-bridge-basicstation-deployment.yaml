@@ -35,9 +35,9 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /etc/chirpstack-gateway-bridge
-              name: chirpstack-gateway-bridge-basicstation-claim0
+              name: vchirpstack-gateway-bridge-basicstation
       restartPolicy: Always
       volumes:
-        - name: chirpstack-gateway-bridge-basicstation-claim0
-          persistentVolumeClaim:
-            claimName: chirpstack-gateway-bridge-basicstation-claim0
+        - name: vchirpstack-gateway-bridge-basicstation
+          configMap:
+            name: chirpstack-gateway-bridge-conf

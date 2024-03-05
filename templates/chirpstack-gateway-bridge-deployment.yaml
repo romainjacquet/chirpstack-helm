@@ -39,9 +39,9 @@ spec:
               protocol: UDP
           volumeMounts:
             - mountPath: /etc/chirpstack-gateway-bridge
-              name: chirpstack-gateway-bridge-claim0
+              name: vchirpstack-gateway-bridge-conf
       restartPolicy: Always
       volumes:
-        - name: chirpstack-gateway-bridge-claim0
-          persistentVolumeClaim:
-            claimName: chirpstack-gateway-bridge-claim0
+        - name: vchirpstack-gateway-bridge-conf
+          configMap:
+            name: chirpstack-gateway-bridge-conf

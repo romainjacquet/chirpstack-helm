@@ -8,6 +8,7 @@ metadata:
     io.kompose.service: chirpstack
   name: chirpstack
 spec:
+  type: NodePort
   ports:
     - name: "8080"
       port: 8080
