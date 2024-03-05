@@ -34,12 +34,12 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /docker-entrypoint-initdb.d
-              name: postgres-claim0
+              name: vpostgres-initscripts
             - mountPath: /var/lib/postgresql/data
               name: postgresqldata
       restartPolicy: Always
       volumes:
-        - name: postgres-claim0
+        - name: vpostgres-initscripts
           configMap:
             name: postgres-initscripts
         - name: postgresqldata
