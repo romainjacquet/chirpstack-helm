@@ -8,7 +8,7 @@ min_idle_connections=0
 
 [redis]
 servers=[
-    "redis://$REDIS_HOST/",
+    "redis://:$REDIS_PASSWORD@$REDIS_HOST/",
 ]
 tls_enabled=false
 cluster=false

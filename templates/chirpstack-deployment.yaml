@@ -31,9 +31,14 @@ spec:
             - name: MQTT_BROKER_HOST
               value: mosquitto
             - name: POSTGRESQL_HOST
-              value: postgres
+              value: {{ .Values.env.postgres_host }}
             - name: REDIS_HOST
-              value: redis
+              value: {{ .Values.env.redis_host }}
+            - name: REDIS_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: redis_password
           image: chirpstack/chirpstack:4
           name: chirpstack
           ports:

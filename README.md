@@ -14,13 +14,19 @@ The region support is limited to Chirstack region used in Europe:
 
 ## how to deploy
 
+Install the dependency, redis with default password and suitable configuration for Chirpstack:
+
+``shell
+helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
+```
+
 Build and install instructions:
 
 ```shell
 helm dependency build
 helm package .
-helm uninstall your-release
-helm install ./chirpstack*tgz
+helm uninstall <your-release>
+helm install --set env.redis_host=b-redis-master --set env.redis_password=VGhlUmVkaXNQd2Qh ./chirpstack*tgz <your-release> 
 ```
 
 ## Infrastructure
