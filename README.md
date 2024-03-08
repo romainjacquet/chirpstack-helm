@@ -1,6 +1,6 @@
 # chirpstack-helm
 
-Experimenting Chirpstack deployment to Kubernetes. The goal is testing a private LoraWan network for smart agriculture.
+Experimenting Chirpstack deployment to Kubernetes. The goal is testing a private LoraWan network for smart agriculture, smart industries or smart cityes.
 This private network will allow all the participants to share data, and view on a map.
 
 The region support is limited to Chirstack region used in Europe:
@@ -10,11 +10,34 @@ The region support is limited to Chirstack region used in Europe:
   * CN470 (soonly)
   * US915 (soonly)
 
-## basic installation guide
+> [!WARNING]
+> This project is currently under development.
+
+## basic installation guide
+
+> [!IMPORTANT]
+> The project is migrating to [helmfile](https://helmfile.readthedocs.io/en/latest/).
 
 Install the dependency, redis with default password and suitable configuration for Chirpstack:
 
-``shell
+```shell
+helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
+helm install --set auth.postgresPassword='Root' \
+  --set auth.username='chirpstack' \
+  --set auth.password='chirpstack' \
+  --set auth.database='chirpstack' \
+  --set primary.initdb.scripts.'001-chirpstack_extensions\.sql=
+        create extension pg_trgm;
+        create extension hstore;
+    ' \
+  b-postgres \
+  oci://registry-1.docker.io/bitnamicharts/postgresql
+```
+
+
+Install the dependency, redis with default password and suitable configuration for Chirpstack:
+
+```shell
 helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
 helm install --set auth.postgresPassword='Root' \
   --set auth.username='chirpstack' \
@@ -37,6 +60,8 @@ helm uninstall <your-release>
 helm install --set env.redis_host=b-redis-master --set env.redis_password=VGhlUmVkaXNQd2Qh  --set env.postgres_host=b-postgres-postgresql  <your-release> ./chirpstack*tgz
 ```
 
+## Architecture
+
 The choosen infrastructure has one MQTT broker per region. The advantages are:
 
   * better scalability (avoid that one MQTT broker support all the regions traffic)
@@ -51,9 +76,9 @@ The external services are :
     * UDP semtech port 1700
     * basic station 3001 (to be confirmed)
 
-Authent
+![Chripstack](/schemas/kubernetes.png)
 
-## Use cases 
+## Use cases 
 
   * adding a new user, i.e. new gateway in a region 
   * deleting a user
@@ -63,7 +88,7 @@ Authent
 Tests should be done both with software (simulators) and hardare.
 Type of devices to test ?
 
-### Hardware tests
+### Hardware tests
 
 We need at least a gateway and typical sensors for smart agriculture. Money can be saved by buying just a temperature sensor.
 
@@ -79,4 +104,12 @@ There is still open points on this section (test capabilities, payload data,)
 
   * [lora-pktgen](https://github.com/donadonny/lora-pktgen) : support only semtech (UDP packet) 
   * [LWN-simulator](https://github.com/UniCT-ARSLab/LWN-Simulator) : more complete system
-  * 
+
+## Roadmap
+
+The project is currently a testbed. Below are a list of the future steps:
+
+  - [ ] testing with a hardware gateway  
+  - [ ] include an integration to mongoDB
+  - [ ] integrate the Kalisio maps to view data
+  - [ ] protect all service with a Keycloak webportal
