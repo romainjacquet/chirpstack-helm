@@ -15,66 +15,53 @@ The region support is limited to Chirstack region used in Europe:
 
 ## basic installation guide
 
-> [!IMPORTANT]
-> The project is migrating to [helmfile](https://helmfile.readthedocs.io/en/latest/).
+### with Helmfile
 
-Install the dependency, redis with default password and suitable configuration for Chirpstack:
-
+Build and deploy with helmfile the **recommanded** method.
 ```shell
-helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
-helm install --set auth.postgresPassword='Root' \
-  --set auth.username='chirpstack' \
-  --set auth.password='chirpstack' \
-  --set auth.database='chirpstack' \
-  --set primary.initdb.scripts.'001-chirpstack_extensions\.sql=
-        create extension pg_trgm;
-        create extension hstore;
-    ' \
-  b-postgres \
-  oci://registry-1.docker.io/bitnamicharts/postgresql
+helmfile apply -e minikube .
+```
+Uninstall:
+```shell
+helmfile destroy .
 ```
 
+### with helm
 
-Install the dependency, redis with default password and suitable configuration for Chirpstack:
-
-```shell
-helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
-helm install --set auth.postgresPassword='Root' \
-  --set auth.username='chirpstack' \
-  --set auth.password='chirpstack' \
-  --set auth.database='chirpstack' \
-  --set primary.initdb.scripts.'001-chirpstack_extensions\.sql=
-        create extension pg_trgm;
-        create extension hstore;
-    ' \
-  b-postgres \
-  oci://registry-1.docker.io/bitnamicharts/postgresql
-```
-
-Build and install instructions:
+Build and deploy with helm. This is **not the recommanded** method.
 
 ```shell
 helm dependency build
 helm package .
-helm uninstall <your-release>
-helm install --set env.redis_host=b-redis-master --set env.redis_password=VGhlUmVkaXNQd2Qh  --set env.postgres_host=b-postgres-postgresql  <your-release> ./chirpstack*tgz
+helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
+helm install -f config/helmfile/minikube/postgres.yaml b-postgres oci://registry-1.docker.io/bitnamicharts/postgresql
+helm install -f config/helmfile/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
+```
+
+### basic usage
+
+Connect to the network server on minikube:
+```shell
+minikube service chirpstack --url -n chirpstack-dev
 ```
 
 ## Architecture
 
 The choosen infrastructure has one MQTT broker per region. The advantages are:
 
-  * better scalability (avoid that one MQTT broker support all the regions traffic)
-  * easyier configuration on user side (no need to add a prefix in the topic)
+  * better scalability: avoid that one MQTT broker support traffic coming from all the regions)
+  * easyier configuration on the gateway: no need to add a prefix in the topic
 
 ![Chripstack](/schemas/infra-structure.png)
 
 The external services are :
 
-    * the web portal for the network server Chirpstack (port 80)
-    * MQTT forwarder port 1883
-    * UDP semtech port 1700
-    * basic station 3001 (to be confirmed)
+  * the web portal for the network server Chirpstack (port 80)
+  * MQTT forwarder port 1883
+  * UDP semtech port 1700
+  * basic station 3001 (to be confirmed)
+
+### Kubernetes infrastructure
 
 ![Chripstack](/schemas/kubernetes.png)
 

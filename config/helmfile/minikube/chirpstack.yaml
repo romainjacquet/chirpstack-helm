@@ -1,0 +1,6 @@
+# chirpstack values for minikube environment
+
+env:
+  redis_host: redis-bitnami-master
+  redis_password: VGhlUmVkaXNQd2Qh  # base 64 encoded
+  postgres_host: postgres-bitnami-postgresql 

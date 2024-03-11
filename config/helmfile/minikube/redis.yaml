@@ -1,0 +1,10 @@
+# redis values for minikube environment
+auth:
+  password: 'TheRedisPwd!' 
+  
+# write options
+master:
+  extraFlags: 
+    - --save 300 1
+    - --save 60 100
+    - --appendonly no

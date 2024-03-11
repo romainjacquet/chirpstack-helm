@@ -1,0 +1,16 @@
+# postgres values for minikube environment
+
+#default user and db
+auth:
+  postgresPassword: Root
+  username: chirpstack
+  password: chirpstack
+  database: chirpstack
+
+# required extensions for chirpstack
+primary:
+  initdb:
+    scripts:
+      001-chirpstack_extensions.sql: |
+        create extension pg_trgm;
+        create extension hstore;
