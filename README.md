@@ -33,7 +33,7 @@ Build and deploy with helm. This is **not the recommanded** method.
 ```shell
 helm dependency build
 helm package .
-helm install --set auth.password='TheRedisPwd!' --set master.extraFlags='{--save,300,1,--save,60,100,--appendonly,no}' b-redis oci://registry-1.docker.io/bitnamicharts/redis
+helm install -f config/helmfile/minikube/redis.yaml b-redis oci://registry-1.docker.io/bitnamicharts/redis
 helm install -f config/helmfile/minikube/postgres.yaml b-postgres oci://registry-1.docker.io/bitnamicharts/postgresql
 helm install -f config/helmfile/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
 ```

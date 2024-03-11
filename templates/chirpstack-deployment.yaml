@@ -39,6 +39,11 @@ spec:
                 secretKeyRef:
                   name: chirp-secret
                   key: redis_password
+            - name: POSTGRESQL_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: postgresql_password
           image: chirpstack/chirpstack:4
           name: chirpstack
           ports:
@@ -71,6 +76,11 @@ spec:
                 secretKeyRef:
                   name: chirp-secret
                   key: redis_password
+            - name: POSTGRESQL_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: postgresql_password
           securityContext:
             runAsUser: 0
           volumeMounts:
