@@ -33,9 +33,16 @@ Build and deploy with helm. This is **not the recommanded** method.
 ```shell
 helm dependency build
 helm package .
-helm install -f config/helmfile/minikube/redis.yaml b-redis oci://registry-1.docker.io/bitnamicharts/redis
-helm install -f config/helmfile/minikube/postgres.yaml b-postgres oci://registry-1.docker.io/bitnamicharts/postgresql
-helm install -f config/helmfile/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
+helm install -f helmfileconfig/minikube/redis.yaml redis-bitnami oci://registry-1.docker.io/bitnamicharts/redis
+helm install -f helmfileconfig/minikube/postgres.yaml postgres-bitnami oci://registry-1.docker.io/bitnamicharts/postgresql
+helm install -f helmfileconfig/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
+```
+
+Uninstall with helm:
+```shell
+helm uninstall sab-bamboo
+helm uninstall redis-bitnami
+helm uninstall redis-bitnami 
 ```
 
 ### basic usage
