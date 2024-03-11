@@ -2,25 +2,28 @@ repositories:
 - name: bitnami
   url: https://charts.bitnami.com/bitnami
 
+
+# 3 charts used: redis, postgres and chirpstack
 releases:
 
 - name: minik-chirpstack
   namespace: chirpstack-dev
+  # TODO: replace the local use of chirpstack by pull a remote repo
   chart: ./    
   values:
-    - config/helmfile/{{`{{ .Environment.Name }}`}}/chirpstack.yaml
+    - helmfileconfig/{{`{{ .Environment.Name }}`}}/chirpstack.yaml
  
 - name: postgres-bitnami
   namespace: chirpstack-dev
   chart: bitnami/postgresql
   values:
-    - config/helmfile/{{`{{ .Environment.Name }}`}}/postgres.yaml
+    - helmfileconfig/{{`{{ .Environment.Name }}`}}/postgres.yaml
      
 - name: redis-bitnami
   namespace: chirpstack-dev
   chart: bitnami/redis
   values:
-    - config/helmfile/{{`{{ .Environment.Name }}`}}/redis.yaml
+    - helmfileconfig/{{`{{ .Environment.Name }}`}}/redis.yaml
 
 # 2 environments:
 #  * minikube for development purpose
