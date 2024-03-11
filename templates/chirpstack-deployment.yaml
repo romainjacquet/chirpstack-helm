@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:  
-  labels:
-    io.kompose.service: chirpstack
+  labels:    
+    app.kubernetes.io/component: networkserver    
   name: chirpstack
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: chirpstack
+      app.kubernetes.io/component: networkServer
   strategy:
     type: Recreate
   template:
     metadata:      
-      labels:
-        io.kompose.network/chirpstack-kompose-default: "true"
-        io.kompose.service: chirpstack
+      labels:        
+        app.kubernetes.io/component: networkServer
+        app.kubernetes.io/part-of: chirstack
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}        
     spec:
       containers:
         - args:
