@@ -31,8 +31,8 @@ helmfile destroy .
 Build and deploy with helm. This is **not the recommanded** method.
 
 ```shell
-helm dependency build
-helm package .
+helm dependency build charts/chirpstack
+helm package charts/chirpstack
 helm install -f helmfileconfig/minikube/redis.yaml redis-bitnami oci://registry-1.docker.io/bitnamicharts/redis
 helm install -f helmfileconfig/minikube/postgres.yaml postgres-bitnami oci://registry-1.docker.io/bitnamicharts/postgresql
 helm install -f helmfileconfig/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
