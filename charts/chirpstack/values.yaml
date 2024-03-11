@@ -1,0 +1,6 @@
+# chirpstack default values
+
+env:
+  redis_host: "redis"
+  redis_password: "password"
+  postgres_host: "postgres"
