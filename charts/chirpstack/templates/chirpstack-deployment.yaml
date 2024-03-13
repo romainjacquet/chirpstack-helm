@@ -26,7 +26,7 @@ spec:
             - name: MQTT_BROKER_HOST
               value: mosquitto
             - name: POSTGRESQL_HOST
-              value: {{ .Values.env.postgres_host }}
+              value: {{ .Values.env.postgres.host }}
             - name: REDIS_HOST
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
@@ -55,15 +55,16 @@ spec:
             name: chirpstack-config
         - name: chirpstack-claim1
           persistentVolumeClaim:
-            claimName: chirpstack-claim1
-      # init container is used to fetch lorawan devices and import them into the postgreSQL
+            claimName: chirpstack-claim1      
       initContainers:
+        {{- if .Values.env.fetch_lorawan_device }}
+        # init container is used to fetch lorawan devices and import them into the postgreSQL
         - name: fetch-lorawan-devices
           image: chirpstack/chirpstack:4
           command: ['sh', '-c', 'apk add --no-cache git && git clone https://github.com/brocaar/lorawan-devices /opt/lorawan-devices && chirpstack -c /etc/chirpstack import-legacy-lorawan-devices-repository -d /opt/lorawan-devices; sleep 60']          
           env:            
             - name: POSTGRESQL_HOST
-              value: {{ .Values.env.postgres_host }}
+              value: {{ .Values.env.postgres.host }}
             - name: REDIS_HOST
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
@@ -82,4 +83,24 @@ spec:
             - mountPath: /etc/chirpstack
               name: vchirpstack-config
             - mountPath: /opt/lorawan-devices
-              name: chirpstack-claim1      
+              name: chirpstack-claim1
+        {{- end }}
+        # init container to update the admin password of the portal      
+        - name: update-admin-passwd
+          image: docker.io/bitnami/postgresql:16
+          command: ["psql", "-c", "update public.user set password_hash ='{{ .Values.env.networkserver.admin_password }}' where id = '05244f12-6daf-4e1f-8315-c66783a0ab56';"]
+          env:            
+            - name: PGHOST
+              value: {{ .Values.env.postgres.host }}                          
+            - name: PGUSER
+              value: {{ .Values.env.postgres.user }}            
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: postgresql_password            
+            - name: PGDATABASE
+              value: {{ .Values.env.postgres.database | default "chirpstack"}}
+          securityContext:
+            runAsUser: 0
+
