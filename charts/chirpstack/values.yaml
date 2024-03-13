@@ -1,6 +1,15 @@
 # chirpstack default values
 
 env:
+  fetch_lorawan_device: yes
+
   redis_host: "redis"
   redis_password: "password"
-  postgres_host: "postgres"
+  
+  postgres:
+    host: postgres-bitnami-postgresql
+    user: chirpstack
+
+  networkserver:
+    admin_password: $pbkdf2-sha512$i=10000,l=32$8+wkKPD+g1rhQ7LmDafdmQ$9CkcCerTUyUf3fSPtyKcKZ5BmZio/DvEZuvRxSvGtnc # PBKDB2 hash
+    

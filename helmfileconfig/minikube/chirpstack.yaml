@@ -3,6 +3,9 @@
 env:
   redis_host: redis-bitnami-master
   redis_password: VGhlUmVkaXNQd2Qh  # base 64 encoded
-  postgres_host: postgres-bitnami-postgresql 
-  postgresql_password: Y2hpcnBzdGFjaw== # base 64 encoded
-
+  postgres:
+    host: postgres-bitnami-postgresql 
+    user: chirpstack
+    db: chirpstack
+    password: Y2hpcnBzdGFjaw== # base 64 encoded
+  

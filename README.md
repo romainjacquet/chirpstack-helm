@@ -37,6 +37,10 @@ helm install -f helmfileconfig/minikube/redis.yaml redis-bitnami oci://registry-
 helm install -f helmfileconfig/minikube/postgres.yaml postgres-bitnami oci://registry-1.docker.io/bitnamicharts/postgresql
 helm install -f helmfileconfig/minikube/chirpstack.yaml sad-bamboo ./chirpstack-0.0.1.tgz
 ```
+The default installation download all the devices from the internet. It's possible to skip this step:
+```shell
+helm install -f helmfileconfig/minikube/chirpstack.yaml  --set env.fetch_lorawan_device=False  sad-bamboo ./chirpstack-0.0.1.tgz
+```
 
 Uninstall with helm:
 ```shell
