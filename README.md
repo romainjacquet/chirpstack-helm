@@ -88,12 +88,29 @@ Type of devices to test ?
 
 ### Hardware tests
 
-We need at least a gateway and typical sensors for smart agriculture. Money can be saved by buying just a temperature sensor.
+This section describes how to connect hardware (gateway and sensors) to chirpstack. This part require the installation
+of a kubectl plugin, because kubectl cannot natively managed UDP port with kubectl port-forward (see issue #47862)[https://github.com/kubernetes/kubernetes/issues/47862].
 
-  * [a GW for 200€](https://sparwan.com/smart-office-/115-passerelle-lorawan-ug63-868m-6974225038176.html), support all the connexion we need: MQTT, Semtech, BS
-  * [a weather station 300€](https://sparwan.com/stations-meteo/642-station-meteo-lorawan-8-en-1-sensecap-s2120-seeedstudio.html)
-  * [a soil humidity captor, 200€](https://sparwan.com/smart-agriculture-/495-capteur-d-humidite-du-sol-lorawan-rak-wireless-c15007.html)
-  * [a simple temperature sensor](https://sparwan.com/qualite-de-l-air/599-capteur-de-temperature-lorawan-milesight-ts302.html)
+The following hardware have been used:
+
+  * Gateway [Milesight UG63](https://www.milesight.com/iot/product/lorawan-gateway/ug63), the gateway support all the MQTT connexion with chirpstack V3 (not yet tested) and UDP Semtech connexion with chirpstack V4.
+  * Environment sensor [Milesight EM300-TH-868M](https://www.milesight.com/iot/product/lorawan-sensor/em300-th)
+  * Sound level sensor [Milesight WS302-868M](https://www.milesight.com/iot/product/lorawan-sensor/ws302)
+
+Connect minikube to the Lorawan gateway:
+
+  1. Configure the gateway using the webinterface: add packet forwarder with type Semtech, keep the port 1700
+  2. Install the kubectl plugin manager [krew](https://krew.sigs.k8s.io/)
+  3. Install the kubectl plugin [relay](https://github.com/knight42/krelay?tab=readme-ov-file#installation)
+  4. Configure the port redirection `kubectl relay --address 0.0.0.0  service/chirpstack-gateway-bridge  1700:1700@udp`
+  5. Check that chirpstack received event from Mosquitto `kubectl logs service/chirpstack-gateway-bridge -f |grep uplink`
+
+Configure the Chirpstack network server:
+
+  1. Go the `Tenant > Gateways > Add gateway`
+  2. The gateway ID is available in the milesight web interface. Fill the form and submit 
+  3. Go the `Tenant > Gateways > Your_gateway`, after few minutes the GW shoud be seen
+  4. You can check this step by looking at the `LoRaWAN` tab in `Tenant > Gateways > Your_gateway`
 
 ### Software tests
 
