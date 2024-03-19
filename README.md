@@ -1,14 +1,14 @@
 # chirpstack-helm
 
-Experimenting Chirpstack deployment to Kubernetes. The goal is testing a private LoraWan network for smart agriculture, smart industries or smart cityes.
+Experimenting Chirpstack deployment to Kubernetes. The goal is testing a private LoraWan network for smart agriculture, smart industries or smart cities.
 This private network will allow all the participants to share data, and view on a map.
 
-The region support is limited to Chirstack region used in Europe:
-
-  * EU868     
-  * IN865 
-  * CN470 (soonly)
-  * US915 (soonly)
+The chart: 
+  * contains mosquitto (MQTT broker), the gateway bridge, the network server and the rest API.
+  * dependends on [Kargo Chart](https://github.com/kalisio/kargo/tree/master/charts/kargo)
+  * does not include the dependencies redis and postgres. See the helmfile, to view how to use chart for this
+  * provide a default configuration in the config folder, for two regions eu868 and in865.
+  
 
 > [!WARNING]
 > This project is currently under development.
