@@ -94,7 +94,8 @@ of a kubectl plugin, because kubectl cannot natively managed UDP port with kubec
 The following hardware have been used:
 
   * Gateway [Milesight UG63](https://www.milesight.com/iot/product/lorawan-gateway/ug63), the gateway support different packet forwared: MQTT, Semtech UDP, basicstation.
-  [!WARNING] MQTT packet forwarder required chirpstack V3
+>  [!WARNING] 
+>  MQTT packet forwarder required chirpstack V3
   * Environment sensor [Milesight EM300-TH-868M](https://www.milesight.com/iot/product/lorawan-sensor/em300-th)
   * Sound level sensor [Milesight WS302-868M](https://www.milesight.com/iot/product/lorawan-sensor/ws302)
 
