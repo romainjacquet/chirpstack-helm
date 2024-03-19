@@ -13,6 +13,7 @@ The chart:
 > [!WARNING]
 > This project is currently under development.
 
+
 ## basic installation guide
 
 ### with Helmfile
@@ -88,15 +89,15 @@ Type of devices to test ?
 
 ### Hardware tests
 
-This section describes how to connect hardware (gateway and sensors) to chirpstack. This part require the installation
-of a kubectl plugin, because kubectl cannot natively managed UDP port with kubectl port-forward (see issue #47862)[https://github.com/kubernetes/kubernetes/issues/47862].
+This section describes how to connect a gateway and sensors to the chirpstack network, so you can view the data measured by your sensors. This part require the installation of a kubectl plugin, because kubectl cannot natively managed UDP port with kubectl port-forward (see issue #47862)[https://github.com/kubernetes/kubernetes/issues/47862].
 
-The following hardware have been used:
+The following hardware have been used for testing:
 
   * Gateway [Milesight UG63](https://www.milesight.com/iot/product/lorawan-gateway/ug63), the gateway support different packet forwared: MQTT, Semtech UDP, basicstation.
 >  [!WARNING] 
 >  MQTT packet forwarder required chirpstack V3
->  if you are using chirpstack V4 the connexion must be done with semtech UDP Protocol
+>  neither semtech UDP packet forwarder, neither MQTT packet forwarder support authentication
+
   * Environment sensor [Milesight EM300-TH-868M](https://www.milesight.com/iot/product/lorawan-sensor/em300-th)
   * Sound level sensor [Milesight WS302-868M](https://www.milesight.com/iot/product/lorawan-sensor/ws302)
 
@@ -120,11 +121,11 @@ Adding the sensors in Chirpstack. It will begin by creating an application and a
   1. Go to `Tenant > Applications` , click on `Add application`. Fill the form and submit
   2. Go to `Tenant > Devices Profiles`, create a profile for your sensor. Example classA_eu868.
   3. Go to `Tenant > Applications > Your application`, click on `Add device`
-    1. The device EUI could be find on the the device
-    2. it's not required to add Join EUI
-    3. Select your device profile
-    4. It's recommanded to keep OTAA authentication
-    5. you will have to provide the Application key, usually device with a default value
+  4. The device EUI could be find on the the device
+  5. it's not required to add Join EUI
+  7. Select your device profile
+  8. It's recommanded to keep OTAA authentication
+  9. you will have to provide the Application key, usually device with a default value
 
 ### Software tests
 
@@ -138,7 +139,7 @@ There is still open points on this section (test capabilities, payload data,)
 
 The project is currently a testbed. Below are a list of the future steps:
 
-  - [ X ] testing with a hardware gateway  
+  - [x] testing with a hardware gateway  
   - [ ] include an integration to mongoDB
   - [ ] integrate the Kalisio maps to view data
   - [ ] protect all service with a Keycloak webportal
