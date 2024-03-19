@@ -93,7 +93,8 @@ of a kubectl plugin, because kubectl cannot natively managed UDP port with kubec
 
 The following hardware have been used:
 
-  * Gateway [Milesight UG63](https://www.milesight.com/iot/product/lorawan-gateway/ug63), the gateway support all the MQTT connexion with chirpstack V3 (not yet tested) and UDP Semtech connexion with chirpstack V4.
+  * Gateway [Milesight UG63](https://www.milesight.com/iot/product/lorawan-gateway/ug63), the gateway support different packet forwared: MQTT, Semtech UDP, basicstation.
+  [!WARNING] MQTT packet forwarder required chirpstack V3
   * Environment sensor [Milesight EM300-TH-868M](https://www.milesight.com/iot/product/lorawan-sensor/em300-th)
   * Sound level sensor [Milesight WS302-868M](https://www.milesight.com/iot/product/lorawan-sensor/ws302)
 
@@ -111,6 +112,17 @@ Configure the Chirpstack network server:
   2. The gateway ID is available in the milesight web interface. Fill the form and submit 
   3. Go the `Tenant > Gateways > Your_gateway`, after few minutes the GW shoud be seen
   4. You can check this step by looking at the `LoRaWAN` tab in `Tenant > Gateways > Your_gateway`
+
+Adding the sensors in Chirpstack. It will begin by creating an application and a device profile:
+
+  1. Go to `Tenant > Applications` , click on `Add application`. Fill the form and submit
+  2. Go to `Tenant > Devices Profiles`, create a profile for your sensor. Example classA_eu868.
+  3. Go to `Tenant > Applications > Your application`, click on `Add device`
+    1. The device EUI could be find on the the device
+    2. it's not required to add Join EUI
+    3. Select your device profile
+    4. It's recommanded to keep OTAA authentication
+    5. you will have to provide the Application key, usually device with a default value
 
 ### Software tests
 
