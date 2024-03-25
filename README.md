@@ -119,13 +119,19 @@ Configure the Chirpstack network server:
 Adding the sensors in Chirpstack. It will begin by creating an application and a device profile:
 
   1. Go to `Tenant > Applications` , click on `Add application`. Fill the form and submit
-  2. Go to `Tenant > Devices Profiles`, create a profile for your sensor. Example classA_eu868.
+  2. Go to `Tenant > Devices Profiles`, create a profile for your sensor. Example milesight_environment.
   3. Go to `Tenant > Applications > Your application`, click on `Add device`
   4. The device EUI could be find on the the device
   5. it's not required to add Join EUI
   7. Select your device profile
   8. It's recommanded to keep OTAA authentication
   9. you will have to provide the Application key, usually device with a default value
+  10. Add a codec with javascript function. Milesight provide the javascript function for all the sensor on github [Milesight-IoT/SensorDecoders](https://github.com/Milesight-IoT/SensorDecoders).
+  11. Once you have configure the codec, you can configure the measurement.
+
+For each sensor, the codec must be configured to be able to view data. Data are visible in the metrics tab.
+
+
 
 ### Software tests
 
