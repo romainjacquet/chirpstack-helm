@@ -5,7 +5,7 @@ This private network will allow all the participants to share data, and view on 
 
 The chart: 
   * contains mosquitto (MQTT broker), the gateway bridge, the network server and the rest API.
-  * dependends on [Kargo Chart](https://github.com/kalisio/kargo/tree/master/charts/kargo)
+  * has no dependency
   * does not include the dependencies redis and postgres. See the helmfile, to view how to use chart for this
   * provide a default configuration in the config folder, for two regions eu868 and in865.
   
@@ -124,12 +124,16 @@ Adding the sensors in Chirpstack. It will begin by creating an application and a
   4. The device EUI could be find on the the device
   5. it's not required to add Join EUI
   7. Select your device profile
-  8. It's recommanded to keep OTAA authentication
-  9. you will have to provide the Application key, usually device with a default value
+  8. In the configuration tab, generate network session key and application key. Save
+  9. Flash the device with NFC and configure Join type ABP and configure with the same keys entered in the portal
   10. Add a codec with javascript function. Milesight provide the javascript function for all the sensor on github [Milesight-IoT/SensorDecoders](https://github.com/Milesight-IoT/SensorDecoders).
   11. Once you have configure the codec, you can configure the measurement.
 
 For each sensor, the codec must be configured to be able to view data. Data are visible in the metrics tab.
+
+Known issues:
+
+  * with OTAA authentication, if network server is rebooted, only the gate way is seen in the chirpstack IU. The sensor are not visible because the **join request** is not sent. Further investigation are required to say wether it come from the configuration of chirpstack or a bug in Chirpstack. Chirpstack may flush the key when stopping and not reinitiate a join on all sensors. For testing it's more convenient to have an ABP  authentication.
 
 
 
@@ -148,4 +152,4 @@ The project is currently a testbed. Below are a list of the future steps:
   - [x] testing with a hardware gateway  
   - [ ] include an integration to mongoDB
   - [ ] integrate the Kalisio maps to view data
-  - [ ] protect all service with a Keycloak webportal
+  - [ ] protect all services with a Keycloak webportal
