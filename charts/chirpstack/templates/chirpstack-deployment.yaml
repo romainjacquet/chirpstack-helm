@@ -3,7 +3,7 @@ kind: Deployment
 metadata:  
   labels:    
     app.kubernetes.io/component: networkserver    
-  name: chirpstack
+  name: chirpstack-networkserver
 spec:
   replicas: 1
   selector:
@@ -48,7 +48,14 @@ spec:
           volumeMounts:
             - mountPath: /etc/chirpstack
               name: vchirpstack-config            
-      restartPolicy: Always
+          resources:
+            limits:
+              cpu: {{ .Values.resources.networkserver.limits.cpu }}
+              memory: {{ .Values.resources.networkserver.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.networkserver.requests.cpu }}
+              memory: {{ .Values.resources.networkserver.requests.memory }}
+      restartPolicy: Always      
       volumes:
         - name: vchirpstack-config
           configMap:
@@ -85,22 +92,23 @@ spec:
             - mountPath: /opt/lorawan-devices
               name: chirpstack-claim1
         {{- end }}
+        # FIXME: no longer working if we clean the PVC so useless
         # init container to update the admin password of the portal      
-        - name: update-admin-passwd
-          image: docker.io/bitnami/postgresql:16
-          command: ["psql", "-c", "update public.user set password_hash ='{{ .Values.env.networkserver.admin_password }}' where id = '05244f12-6daf-4e1f-8315-c66783a0ab56';"]
-          env:            
-            - name: PGHOST
-              value: {{ .Values.env.postgres.host }}                          
-            - name: PGUSER
-              value: {{ .Values.env.postgres.user }}            
-            - name: PGPASSWORD
-              valueFrom: 
-                secretKeyRef:
-                  name: chirp-secret
-                  key: postgresql_password            
-            - name: PGDATABASE
-              value: {{ .Values.env.postgres.database | default "chirpstack"}}
-          securityContext:
-            runAsUser: 0
+        # - name: update-admin-passwd
+        #   image: docker.io/bitnami/postgresql:16
+        #   command: ["psql", "-c", "update public.user set password_hash ='{{ .Values.env.networkserver.admin_password }}' where id = '05244f12-6daf-4e1f-8315-c66783a0ab56';"]
+        #   env:            
+        #     - name: PGHOST
+        #       value: {{ .Values.env.postgres.host }}                          
+        #     - name: PGUSER
+        #       value: {{ .Values.env.postgres.user }}            
+        #     - name: PGPASSWORD
+        #       valueFrom: 
+        #         secretKeyRef:
+        #           name: chirp-secret
+        #           key: postgresql_password            
+        #     - name: PGDATABASE
+        #       value: {{ .Values.env.postgres.database | default "chirpstack"}}
+        #   securityContext:
+        #     runAsUser: 0
 

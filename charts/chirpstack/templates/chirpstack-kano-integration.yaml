@@ -37,10 +37,18 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: chirp-secret
-                  key: mongo_password            
+                  key: mongo_password     
+          resources:
+            limits:
+              cpu: {{ .Values.resources.kano_integration.limits.cpu }}
+              memory: {{ .Values.resources.kano_integration.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.kano_integration.requests.cpu }}
+              memory: {{ .Values.resources.kano_integration.requests.memory }}       
           ports:            
           volumeMounts:            
       restartPolicy: Always
       volumes:
+      
         
             
