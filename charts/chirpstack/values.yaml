@@ -3,12 +3,19 @@
 env:
   fetch_lorawan_device: yes
 
-  redis_host: "redis"
+  redis_host: "redis-bitnami-master"
+  redis_port: 6379
   redis_password: "password"
   
   postgres:
     host: postgres-bitnami-postgresql
     user: chirpstack
+
+  # mongodDB
+  mongodb:
+    host: mongodb
+    user: chirpstack
+    db: kano    
 
   # only for minikube testing, hardcoded value for node port
   mosquitto_node_port:
