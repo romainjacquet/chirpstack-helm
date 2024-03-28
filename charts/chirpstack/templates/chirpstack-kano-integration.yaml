@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kano-integration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: kano-integration
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:        
+        app.kubernetes.io/component: kano-integration
+    spec:
+      containers:
+        - image: docker.io/kalisio/chirpstack-kano-integration:1.0
+          name: kano-integration
+          args:
+            - chirpstack-stream-consumer.mjs  
+          env:            
+            - name: REDIS_HOST
+              value: {{ .Values.env.redis_host }}
+            - name: REDIS_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: redis_password            
+            - name: MONGO_DB_NAME
+              value: {{ .Values.env.mongodb.db }}
+            - name: MONGO_USER
+              value: {{ .Values.env.mongodb.user }}
+            - name: MONGO_HOST
+              value: {{ .Values.env.mongodb.host }}
+            - name: MONGO_PASSWORD  
+              valueFrom: 
+                secretKeyRef:
+                  name: chirp-secret
+                  key: mongo_password            
+          ports:            
+          volumeMounts:            
+      restartPolicy: Always
+      volumes:
+        
+            

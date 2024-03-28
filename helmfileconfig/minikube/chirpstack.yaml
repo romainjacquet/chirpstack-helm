@@ -1,7 +1,6 @@
 # chirpstack values for minikube environment
 
-env:
-  redis_host: redis-bitnami-master
+env:  
   redis_password: VGhlUmVkaXNQd2Qh  # base 64 encoded
   postgres:
     host: postgres-bitnami-postgresql 
@@ -9,3 +8,8 @@ env:
     db: chirpstack
     password: Y2hpcnBzdGFjaw== # base 64 encoded
   
+  mongodb:
+    host: mongodb-bitnami
+    user: chirpstack
+    password: Y2hpcnBzdGFjaw== # base 64 encoded
+    db: kano    
