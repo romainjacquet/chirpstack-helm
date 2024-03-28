@@ -33,6 +33,13 @@ spec:
           volumeMounts:
             - mountPath: /etc/chirpstack-gateway-bridge
               name: vchirpstack-gateway-bridge-conf
+          resources:
+            limits:
+              cpu: {{ .Values.resources.gateway_bridge.limits.cpu }}
+              memory: {{ .Values.resources.gateway_bridge.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.gateway_bridge.requests.cpu }}
+              memory: {{ .Values.resources.gateway_bridge.requests.memory }}
       restartPolicy: Always
       volumes:
         - name: vchirpstack-gateway-bridge-conf

@@ -25,4 +25,11 @@ spec:
             - containerPort: 8090
               hostPort: 8090
               protocol: TCP
+          resources:
+            limits:
+              cpu: {{ .Values.resources.rest_api.limits.cpu }}
+              memory: {{ .Values.resources.rest_api.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.rest_api.requests.cpu }}
+              memory: {{ .Values.resources.rest_api.requests.memory }}
       restartPolicy: Always

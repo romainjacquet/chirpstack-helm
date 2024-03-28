@@ -3,12 +3,12 @@
 env:
   fetch_lorawan_device: yes
 
-  redis_host: "redis-bitnami-master"
+  redis_host: "redis-master"
   redis_port: 6379
   redis_password: "password"
   
   postgres:
-    host: postgres-bitnami-postgresql
+    host: postgres
     user: chirpstack
 
   # mongodDB
@@ -23,4 +23,42 @@ env:
 
   networkserver:
     admin_password: $pbkdf2-sha512$i=10000,l=32$8+wkKPD+g1rhQ7LmDafdmQ$9CkcCerTUyUf3fSPtyKcKZ5BmZio/DvEZuvRxSvGtnc # PBKDB2 hash
-    
+
+# resources for the different containers
+resources:
+  mosquitto:
+    requests:
+      cpu: "100m" 
+      memory: "128Mi"         
+    limits:
+      cpu: "150m" 
+      memory: "192Mi"
+  rest_api:
+    requests:
+      cpu: "100m" 
+      memory: "128Mi"         
+    limits:
+      cpu: "150m" 
+      memory: "192Mi"
+  gateway_bridge:
+    requests:
+      cpu: "100m" 
+      memory: "128Mi"         
+    limits:
+      cpu: "150m" 
+      memory: "192Mi"
+  networkserver:
+    requests:
+      cpu: "100m" 
+      memory: "128Mi"         
+    limits:
+      cpu: "300m" 
+      memory: "398Mi"
+  kano_integration:
+    requests:
+      cpu: "100m" 
+      memory: "128Mi"         
+    limits:
+      cpu: "300m" 
+      memory: "398Mi" 
+  
