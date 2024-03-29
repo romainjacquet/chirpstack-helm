@@ -13,3 +13,6 @@ env:
     user: chirpstack
     password: Y2hpcnBzdGFjaw== # base 64 encoded
     db: kano    
+
+images:
+  pullSecret: "kalisio-harbor"
