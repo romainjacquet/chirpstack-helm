@@ -41,14 +41,15 @@ helm install -f helmfileconfig/minikube/chirpstack.yaml chirpstack ./chirpstack-
 ```
 The default installation download all the devices from the internet. It's possible to skip this step:
 ```shell
-helm install -f helmfileconfig/minikube/chirpstack.yaml  --set env.fetch_lorawan_device=False  sad-bamboo ./chirpstack-0.0.1.tgz
+helm install -f helmfileconfig/minikube/chirpstack.yaml  --set env.fetch_lorawan_device=False  chirpstack ./chirpstack-0.0.1.tgz
 ```
 
 Uninstall with helm:
 ```shell
-helm uninstall sab-bamboo
-helm uninstall redis-bitnami
-helm uninstall redis-bitnami 
+helm uninstall chirpstack
+helm uninstall redis
+helm uninstall postgres
+helm uninstall mongodb
 ```
 
 ### basic usage
@@ -56,6 +57,31 @@ helm uninstall redis-bitnami
 Connect to the network server on minikube:
 ```shell
 minikube service chirpstack --url -n chirpstack-dev
+```
+
+### backup postgreSQL
+
+Chirpstack store all its configuration (gateway, sensors, users) in a postgresql database.
+If you need to reinstall the application or you delete the PVC, the database must be backup. 
+Otherwise you will have to create again all the configuration.
+
+Backup is done by running a `pg_dump` command in the container.
+> [!WARNING]
+> If you have imported the LoraWan devices, the dump could be nearly 50MB.
+
+```shell
+kubectl exec -it postgres-postgresql-0 -- sh
+cd /bitnami/postgresql
+pg_dump -U postgres -d chirpstack > dump.sql
+# quit the shell
+kubectl cp postgres-postgresql-0:/bitnami/postgresql/dump.sql .
+```
+
+
+Resore is done with psql command.
+```shell
+kubectl cp dump.sql postgres-postgresql-0:/bitnami/postgresql
+kubectl exec -it postgres-postgresql-0 -- psql -U postgres -d chirpstack < /bitnami/postgresql/dump.sql
 ```
 
 ## Architecture

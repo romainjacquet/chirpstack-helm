@@ -1,3 +1,4 @@
 chirpstack-*.tgz
 Chart.lock
 charts/chirpstack/charts/*
+.vscode/
