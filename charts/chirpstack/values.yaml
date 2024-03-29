@@ -1,5 +1,6 @@
 # chirpstack default values
 
+
 env:
   fetch_lorawan_device: yes
 
@@ -23,6 +24,13 @@ env:
 
   networkserver:
     admin_password: $pbkdf2-sha512$i=10000,l=32$8+wkKPD+g1rhQ7LmDafdmQ$9CkcCerTUyUf3fSPtyKcKZ5BmZio/DvEZuvRxSvGtnc # PBKDB2 hash
+
+images:
+  kano_integration:
+    registry: "harbor.portal.kalisio.com"
+    repository: "kalisio/chirpstack-kano-integration"
+    tag: "1.0"
+  pullSecret: ""
 
 # resources for the different containers
 resources:
