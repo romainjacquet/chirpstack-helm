@@ -38,6 +38,7 @@ helm install -f helmfileconfig/minikube/redis.yaml redis oci://registry-1.docker
 helm install -f helmfileconfig/minikube/postgres.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql
 helm install -f helmfileconfig/minikube/mongodb.yaml mongodb  oci://registry-1.docker.io/bitnamicharts/mongodb
 helm install -f helmfileconfig/minikube/chirpstack.yaml chirpstack ./chirpstack-0.0.1.tgz
+helm install -f helmfileconfig/minikube/kano.yaml 
 ```
 The default installation download all the devices from the internet. It's possible to skip this step:
 ```shell
@@ -177,6 +178,6 @@ There is still open points on this section (test capabilities, payload data,)
 The project is currently a testbed. Below are a list of the future steps:
 
   - [x] testing with a hardware gateway  
-  - [ ] include an integration to mongoDB
+  - [X] include an integration to mongoDB
   - [ ] integrate the Kalisio maps to view data
   - [ ] protect all services with a Keycloak webportal
