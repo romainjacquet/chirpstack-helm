@@ -38,7 +38,7 @@ helm install -f helmfileconfig/minikube/redis.yaml redis oci://registry-1.docker
 helm install -f helmfileconfig/minikube/postgres.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql
 helm install -f helmfileconfig/minikube/mongodb.yaml mongodb  oci://registry-1.docker.io/bitnamicharts/mongodb
 helm install -f helmfileconfig/minikube/chirpstack.yaml chirpstack ./chirpstack-0.0.1.tgz
-helm install -f helmfileconfig/minikube/kano.yaml 
+helm install -f helmfileconfig/minikube/kano.yaml kano oci://harbor.portal.kalisio.com/kalisio/helm/kano
 ```
 The default installation download all the devices from the internet. It's possible to skip this step:
 ```shell
