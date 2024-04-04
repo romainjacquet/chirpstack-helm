@@ -26,7 +26,9 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: chirp-secret
-                  key: redis_password            
+                  key: redis_password
+            - name: MONGO_CLEAN
+              value: {{ .Values.env.mongodb.clean | quote }}            
             - name: MONGO_DB_NAME
               value: {{ .Values.env.mongodb.db }}
             - name: MONGO_USER
