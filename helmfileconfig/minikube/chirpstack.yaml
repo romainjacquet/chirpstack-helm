@@ -11,8 +11,9 @@ env:
   mongodb:
     host: mongodb
     user: chirpstack
-    password: chirpstack # base 64 encoded
-    db: kano    
+    password: chirpstack 
+    db: kano 
+    clean: true # use for development purpose    
 
   # require to generate the secret for Kano integration
   kano_integration:
@@ -22,3 +23,5 @@ env:
 
 images:
   pullSecret: "kalisio-harbor"
+  kano_integration:
+    tag: "1.5"

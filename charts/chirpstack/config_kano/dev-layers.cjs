@@ -70,6 +70,76 @@ module.exports = [{
       type: 'tileLayer',
       source: 'https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
     }
+  },
+  {
+    name: 'Layers.CHIRPSTACK',
+    description: 'Layers.CHIRPSTACK_DESCRIPTION',
+    i18n: {
+      fr: {
+        Layers: {
+          CHIRPSTACK: 'LoRaWAN',
+          CHIRPSTACK_DESCRIPTION: 'Capteurs LORAWAN du démonstrateur Kalisio'
+        }
+      },
+      en: {
+        Layers: {
+          CHIRPSTACK: 'LoRaWAN',
+          CHIRPSTACK_DESCRIPTION: 'LoRaWAN sensors of the demonstrator'
+        }
+      }
+    },
+    tags: ['sensors'],
+    type: 'OverlayLayer',
+    service: 'chirpstack-observations',
+    probeService: 'chirpstack-stations',
+    ttl: 7 * 24 * 60 * 60,
+    featureId: 'euid',
+    featureLabel: 'name',
+    from: 'P-0D',
+    to: 'PT-5D',
+    every: 'PT1H',
+    queryFrom: 'PT-5M',
+    variables: [
+      {
+        name: 'temperature',
+        label: 'sensor_values.temperature',
+        units: ['degC'],
+        range: [-50, 127],
+        step: 1,
+        chartjs: {
+          backgroundColor: 'rgba(255, 99, 132, 128)',
+          borderColor: 'rgb(255, 99, 132)',
+          fill: false
+        }
+      },
+      {
+        name: 'humidity',
+        label: 'sensor_values.humidity',
+        units: ['%'],
+        range: [0, 100],
+        step: 5,
+        chartjs: {
+          backgroundColor: 'rgba(255, 88, 52, 128)',
+          borderColor: 'rgb(255, 99, 132)',
+          fill: false
+        }
+      }
+    ],
+    leaflet: {
+      type: 'geoJson',
+      realtime: true,
+      tiled: true,
+      cluster: { disableClusteringAtZoom: 18 },
+      'marker-color': `<% if (properties.status === 'OK') { %>green<% }
+                          else { %>red<% } %>`,
+      'icon-classes': 'fa fa-wifi',
+      'icon-x-offset': -2,
+      'icon-color': '#FFF',
+      template: ['marker-color'],
+      tooltip: {
+        template: '<%= properties.name %>: <%= properties.temperature %>°C'
+      }
+    }
   }
 ]
 

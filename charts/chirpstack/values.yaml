@@ -16,7 +16,8 @@ env:
   mongodb:
     host: mongodb
     user: chirpstack
-    db: kano    
+    db: kano
+    clean: false    
 
   # only for minikube testing, hardcoded value for node port
   mosquitto_node_port:

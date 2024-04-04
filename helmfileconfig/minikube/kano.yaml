@@ -22,7 +22,7 @@ imagePullSecrets:
 
 image:
   repository: kalisio/kano
-  tag: "prod"
+  tag: "test"
   pullPolicy: IfNotPresent
   
 
