@@ -107,7 +107,7 @@ module.exports = [
     from: 'P-0D',
     to: 'PT-5D',
     every: 'PT1H',
-    queryFrom: 'PT-5M',
+    queryFrom: 'PT-10M',
     variables: [
       {
         name: 'battery',
@@ -173,7 +173,7 @@ module.exports = [
     from: 'P-0D',
     to: 'PT-5D',
     every: 'PT1H',
-    queryFrom: 'PT-5M',
+    queryFrom: 'PT-10M',
     variables: [
       {
         name: 'temperature',
@@ -244,7 +244,7 @@ module.exports = [
     from: 'P-0D',
     to: 'PT-5D',
     every: 'PT1H',
-    queryFrom: 'PT-5M',
+    queryFrom: 'PT-10M',
     variables: [
       {
         name: 'lamax',

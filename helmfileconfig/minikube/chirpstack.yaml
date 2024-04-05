@@ -23,5 +23,3 @@ env:
 
 images:
   pullSecret: "kalisio-harbor"
-  kano_integration:
-    tag: "1.8"
