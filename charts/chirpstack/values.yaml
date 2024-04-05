@@ -16,6 +16,7 @@ env:
   mongodb:
     host: mongodb
     user: chirpstack
+    password: chirpstack
     db: kano
     clean: false    
 
@@ -25,6 +26,11 @@ env:
 
   networkserver:
     admin_password: $pbkdf2-sha512$i=10000,l=32$8+wkKPD+g1rhQ7LmDafdmQ$9CkcCerTUyUf3fSPtyKcKZ5BmZio/DvEZuvRxSvGtnc # PBKDB2 hash
+
+  kano_integration:
+    appSecret: ""
+    mapillaryToken: ""
+    cesiumToken: ""
 
 images:
   kano_integration:
