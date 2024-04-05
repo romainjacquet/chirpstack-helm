@@ -1,4 +1,5 @@
-module.exports = [{
+module.exports = [
+  {
     name: 'Layers.OSM',
     description: 'Layers.OSM_DESCRIPTION',
     i18n: {
@@ -79,13 +80,25 @@ module.exports = [{
         Layers: {
           CHIRPSTACK: 'LoRaWAN',
           CHIRPSTACK_DESCRIPTION: 'Capteurs LORAWAN du démonstrateur Kalisio'
-        }
+        },
+        Variables: {
+          LORAWAN_SENSORS_LABEL:'capteurs de mesures LoRaWAN',
+          TEMPERATURE_LABEL: 'Température',
+          HUMIDITY_LABEL: 'Humidité',
+          BATTERY_LEVEL_LABEL: 'Taux de charge batterie'
+        }        
       },
       en: {
         Layers: {
           CHIRPSTACK: 'LoRaWAN',
           CHIRPSTACK_DESCRIPTION: 'LoRaWAN sensors of the demonstrator'
-        }
+        },    
+        Variables: {
+          LORAWAN_SENSORS_LABEL:'LoRaWAN sensors values',
+          TEMPERATURE_LABEL: 'Temperature',
+          HUMIDITY_LABEL: 'Humidity',
+          BATTERY_LEVEL_LABEL: 'Batterie level'
+        }    
       }
     },
     tags: ['sensors'],
@@ -93,8 +106,8 @@ module.exports = [{
     service: 'chirpstack-observations',
     probeService: 'chirpstack-stations',
     ttl: 7 * 24 * 60 * 60,
-    featureId: 'euid',
-    featureLabel: 'name',
+    featureId: 'gw_euid',
+    featureLabel: 'Variables.LORAWAN_SENSORS_LABEL',
     from: 'P-0D',
     to: 'PT-5D',
     every: 'PT1H',
@@ -102,8 +115,8 @@ module.exports = [{
     variables: [
       {
         name: 'temperature',
-        label: 'sensor_values.temperature',
-        units: ['degC'],
+        label: 'Variables.TEMPERATURE_LABEL',
+        unit: ['degC'],
         range: [-50, 127],
         step: 1,
         chartjs: {
@@ -114,12 +127,90 @@ module.exports = [{
       },
       {
         name: 'humidity',
-        label: 'sensor_values.humidity',
-        units: ['%'],
+        label: 'Variables.HUMIDITY_LABEL',
+        unit: ['%'],
         range: [0, 100],
         step: 5,
         chartjs: {
-          backgroundColor: 'rgba(255, 88, 52, 128)',
+          backgroundColor: 'rgba(16, 88, 11, 128)',
+          borderColor: 'rgb(16, 88, 11)',
+          fill: false
+        }
+      },
+      {
+        name: 'battery',
+        label: 'Variables.BATTERY_LEVEL_LABEL',
+        unit: ['%'],
+        range: [0, 100],
+        step: 5,
+        chartjs: {
+          backgroundColor: 'rgba(1, 10, 1, 128)',
+          borderColor: 'rgb(1, 10, 1)',
+          fill: false
+        }
+      }
+    ],
+    leaflet: {
+      type: 'geoJson',
+      realtime: true,
+      tiled: true,
+      cluster: { disableClusteringAtZoom: 18 },
+      'marker-color': `<% if (properties.status === 'OK') { %>green<% }
+                          else { %>red<% } %>`,
+      'icon-classes': 'fa fa-wifi',
+      'icon-x-offset': -2,
+      'icon-color': '#FFF',
+      template: ['marker-color'],
+      tooltip: {
+        template: 'Gateway: <%= properties.euid %>'
+      }
+    }
+  },
+  {
+    name: 'Layers.CHIRPSTACK_TEMPERATURE',
+    description: 'Layers.CHIRPSTACK_DESCRIPTION',
+    i18n: {
+      fr: {
+        Layers: {
+          CHIRPSTACK_TEMPERATURE: 'Température',
+          CHIRPSTACK_DESCRIPTION: 'Température des capteurs LORAWAN'
+        },
+        Variables: {         
+          LORAWAN_SENSORS_LABEL:'capteurs de mesures LoRaWAN',
+          TEMPERATURE_LABEL: 'Température',          
+        }        
+      },
+      en: {
+        Layers: {
+          CHIRPSTACK_TEMPERATURE: 'Temperature',
+          CHIRPSTACK_DESCRIPTION: 'Temperature of LORAWAN sensors'
+        },    
+        Variables: {
+          LORAWAN_SENSORS_LABEL:'LoRaWAN sensors values',
+          TEMPERATURE_LABEL: 'Temperature'
+        }    
+      }
+    },
+    tags: ['sensors'],
+    type: 'OverlayLayer',
+    service: 'chirpstack-observations',
+    probeService: 'chirpstack-stations',
+    ttl: 7 * 24 * 60 * 60,
+    featureId: 'gw_euid',
+    featureLabel: 'Variables.LORAWAN_SENSORS_LABEL',
+    from: 'P-0D',
+    to: 'PT-5D',
+    every: 'PT1H',
+    queryFrom: 'PT-5M',
+    variables: [
+      {
+        name: 'temperature',
+        label: 'Variables.TEMPERATURE_LABEL',
+        unit: ['degC'],
+        range: [-50, 127],
+        step: 1,
+        chartjs: {
+          backgroundColor: 'rgba(255, 99, 132, 128)',
           borderColor: 'rgb(255, 99, 132)',
           fill: false
         }
@@ -137,7 +228,102 @@ module.exports = [{
       'icon-color': '#FFF',
       template: ['marker-color'],
       tooltip: {
-        template: '<%= properties.name %>: <%= properties.temperature %>°C'
+        template: 'Gateway: <%= properties.euid %>'
+      }
+    }
+  },
+  ,
+  {
+    name: 'Layers.CHIRPSTACK_SOUND',
+    description: 'Layers.CHIRPSTACK_DESCRIPTION',
+    i18n: {
+      fr: {
+        Layers: {
+          CHIRPSTACK_SOUND: 'Niveau de son',
+          CHIRPSTACK_DESCRIPTION: 'Capteurs de son du réseau LORAWAN'
+        },
+        Variables: {
+          LORAWAN_SENSORS_LABEL:'capteurs de mesures LoRaWAN',
+          LAEQ: 'Niveau de pression acoustique continue',
+          LAF: 'Niveau sonore avec Pondération Fréquentielle',
+          LAFMAX: 'Niveau Sonore Maximal avec Pondération Fréquentielle '       
+        }        
+      },
+      en: {
+        Layers: {          
+          CHIRPSTACK_SOUND: 'Sound level',
+          CHIRPSTACK_DESCRIPTION: 'LoRaWAN sound sensors'
+        },    
+        Variables: {
+          LORAWAN_SENSORS_LABEL:'LoRaWAN sensors values',
+          LAEQ: 'Sound level A-weighted equivalent',
+          LAF: 'Sound level A-weighted',
+          LAFMAX: 'Sound level A-weighted fast maximum'   
+        }    
+      }
+    },
+    tags: ['sensors'],
+    type: 'OverlayLayer',
+    service: 'chirpstack-observations',
+    probeService: 'chirpstack-stations',
+    ttl: 7 * 24 * 60 * 60,
+    featureId: 'gw_euid',
+    featureLabel: 'Variables.LORAWAN_SENSORS_LABEL',
+    from: 'P-0D',
+    to: 'PT-5D',
+    every: 'PT1H',
+    queryFrom: 'PT-5M',
+    variables: [
+      {
+        name: 'lamax',
+        label: 'Variables.LAFMAX',
+        unit: ['dbA'],
+        range: [0, 160],
+        step: 1,
+        chartjs: {
+          backgroundColor: 'rgba(79, 56, 0, 128)',
+          borderColor: 'rgb(79, 56, 0)',
+          fill: false
+        }
+      },
+      {
+        name: 'laeq',
+        label: 'Variables.LAEQ',
+        unit: ['dbA'],
+        range: [0, 160],
+        step: 1,
+        chartjs: {
+          backgroundColor: 'rgba(79, 14, 0, 128)',
+          borderColor: 'rgb(79, 14, 0)',
+          fill: false
+        }
+      },
+      {
+        name: 'la',
+        label: 'Variables.LAF',
+        unit: ['dbA'],
+        range: [0, 160],
+        step: 1,
+        chartjs: {
+          backgroundColor: 'rgba(79, 0, 35, 128)',
+          borderColor: 'rgb(79, 0, 35)',
+          fill: false
+        }
+      }
+    ],
+    leaflet: {
+      type: 'geoJson',
+      realtime: true,
+      tiled: true,
+      cluster: { disableClusteringAtZoom: 18 },
+      'marker-color': `<% if (properties.status === 'OK') { %>green<% }
+                          else { %>red<% } %>`,
+      'icon-classes': 'fa fa-wifi',
+      'icon-x-offset': -2,
+      'icon-color': '#FFF',
+      template: ['marker-color'],
+      tooltip: {
+        template: 'Sensor: <%= properties.euid %>'
       }
     }
   }

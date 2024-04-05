@@ -27,8 +27,10 @@ spec:
                 secretKeyRef:
                   name: chirp-secret
                   key: redis_password
+            {{- if .Values.env.mongodb.clean }}
             - name: MONGO_CLEAN
-              value: {{ .Values.env.mongodb.clean | quote }}            
+              value: "1"  
+            {{- end}}          
             - name: MONGO_DB_NAME
               value: {{ .Values.env.mongodb.db }}
             - name: MONGO_USER
