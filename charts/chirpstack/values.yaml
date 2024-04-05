@@ -36,7 +36,7 @@ images:
   kano_integration:
     registry: "harbor.portal.kalisio.com"
     repository: "kalisio/chirpstack-kano-integration"
-    tag: "1.0"
+    tag: "latest"
   pullSecret: ""
 
 # resources for the different containers
