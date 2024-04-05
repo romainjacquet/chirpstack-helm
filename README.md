@@ -16,6 +16,16 @@ The chart:
 
 ## basic installation guide
 
+Some docker images need for chirpstack are host on `harbor.portal.kalisio.com`. So you will have to login with `docker login`
+command to this host, and after create a kubectl secret based on this.
+
+```shell
+docker login harbor.portal.kalisio.com
+kubectl create secret generic kalisio-harbor  \
+  --from-file=.dockerconfigjson=/home/rjacquet31/.docker/config.json \
+  --type=kubernetes.io/dockerconfigjson
+```
+
 ### with Helmfile
 
 Build and deploy with helmfile the **recommanded** method.
@@ -29,7 +39,7 @@ helmfile destroy .
 
 ### with helm
 
-Build and deploy with helm. This is **not the recommanded** method.
+Build and deploy with helm. This is **not the recommanded** method but it can help in development phases.
 
 ```shell
 helm dependency build charts/chirpstack
@@ -68,9 +78,12 @@ Otherwise you will have to create again all the configuration.
 
 Backup is done by running a `pg_dump` command in the container.
 > [!WARNING]
-> If you have imported the LoraWan devices, the dump could be nearly 50MB.
+> If you have imported the LoraWan devices, the dump could be nearly 50MB uncompressed.
+
+The current archive is stored under `data/postgresql`.
 
 ```shell
+cd data/postgresql
 kubectl exec -it postgres-postgresql-0 -- sh
 cd /bitnami/postgresql
 pg_dump -U postgres -d chirpstack > dump.sql
@@ -82,7 +95,8 @@ kubectl cp postgres-postgresql-0:/bitnami/postgresql/dump.sql .
 Resore is done with psql command.
 ```shell
 kubectl cp dump.sql postgres-postgresql-0:/bitnami/postgresql
-kubectl exec -it postgres-postgresql-0 -- psql -U postgres -d chirpstack < /bitnami/postgresql/dump.sql
+kubectl exec -it postgres-postgresql-0 -- psql -U postgres -d chirpstack -f /bitnami/postgresql/dump.sql
+# enter postgresql password...
 ```
 
 ## Architecture
