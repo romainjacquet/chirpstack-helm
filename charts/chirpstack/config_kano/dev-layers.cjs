@@ -73,30 +73,26 @@ module.exports = [
     }
   },
   {
-    name: 'Layers.CHIRPSTACK',
-    description: 'Layers.CHIRPSTACK_DESCRIPTION',
+    name: 'Layers.CHIRPSTACK_BATTERY',
+    description: 'Layers.CHIRPSTACK_BATTERY_DESCRIPTION',
     i18n: {
       fr: {
         Layers: {
-          CHIRPSTACK: 'LoRaWAN',
-          CHIRPSTACK_DESCRIPTION: 'Capteurs LORAWAN du démonstrateur Kalisio'
+          CHIRPSTACK_BATTERY: 'batterie LoRaWAN',
+          CHIRPSTACK_BATTERY_DESCRIPTION: 'Capteurs LORAWAN du démonstrateur Kalisio, infos communes'
         },
         Variables: {
           LORAWAN_SENSORS_LABEL:'capteurs de mesures LoRaWAN',
-          TEMPERATURE_LABEL: 'Température',
-          HUMIDITY_LABEL: 'Humidité',
           BATTERY_LEVEL_LABEL: 'Taux de charge batterie'
         }        
       },
       en: {
         Layers: {
-          CHIRPSTACK: 'LoRaWAN',
-          CHIRPSTACK_DESCRIPTION: 'LoRaWAN sensors of the demonstrator'
+          CHIRPSTACK_BATTERY: 'batterie LoRaWAN',
+          CHIRPSTACK_BATTERY_DESCRIPTION: 'LoRaWAN sensors of the demonstrator, common values'
         },    
         Variables: {
           LORAWAN_SENSORS_LABEL:'LoRaWAN sensors values',
-          TEMPERATURE_LABEL: 'Temperature',
-          HUMIDITY_LABEL: 'Humidity',
           BATTERY_LEVEL_LABEL: 'Batterie level'
         }    
       }
@@ -113,30 +109,6 @@ module.exports = [
     every: 'PT1H',
     queryFrom: 'PT-5M',
     variables: [
-      {
-        name: 'temperature',
-        label: 'Variables.TEMPERATURE_LABEL',
-        unit: ['degC'],
-        range: [-50, 127],
-        step: 1,
-        chartjs: {
-          backgroundColor: 'rgba(255, 99, 132, 128)',
-          borderColor: 'rgb(255, 99, 132)',
-          fill: false
-        }
-      },
-      {
-        name: 'humidity',
-        label: 'Variables.HUMIDITY_LABEL',
-        unit: ['%'],
-        range: [0, 100],
-        step: 5,
-        chartjs: {
-          backgroundColor: 'rgba(16, 88, 11, 128)',
-          borderColor: 'rgb(16, 88, 11)',
-          fill: false
-        }
-      },
       {
         name: 'battery',
         label: 'Variables.BATTERY_LEVEL_LABEL',
