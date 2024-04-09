@@ -1,6 +1,7 @@
 # chirpstack values for minikube environment
 
 env:  
+  fetch_lorawan_device: no
   redis_password: VGhlUmVkaXNQd2Qh  # base 64 encoded
   postgres:
     host: postgres-postgresql 

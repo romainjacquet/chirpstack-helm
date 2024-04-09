@@ -7,14 +7,6 @@ auth:
   password: chirpstack
   database: chirpstack
 
-# required extensions for chirpstack
-primary:
-  initdb:
-    scripts:
-      001-chirpstack_extensions.sql: |
-        create extension pg_trgm;
-        create extension hstore;
-
 # persistance
 # 50 Mi are already taken at initial import for LoRaWAN devices
 # we don't use the postgres integration
@@ -32,5 +24,10 @@ primary:
       cpu: "150m" 
       memory: "192Mi"
       ephemeral-storage: "1024Mi"
-
+  initdb:
+    # required extensions for chirpstack
+    scripts:
+      001-chirpstack_extensions.sql: |
+        create extension pg_trgm;
+        create extension hstore;
 

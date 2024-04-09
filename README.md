@@ -36,6 +36,9 @@ Uninstall:
 ```shell
 helmfile destroy .
 ```
+> [!WARNING]
+> The PVC will remains after destroy, so if you really to free up space of test installation from scratch 
+> use `kubectl delete pvc` command to delete the PVC.
 
 ### with helm
 
@@ -57,11 +60,12 @@ helm install -f helmfileconfig/minikube/chirpstack.yaml  --set env.fetch_lorawan
 
 Uninstall with helm:
 ```shell
-helm uninstall chirpstack
-helm uninstall redis
-helm uninstall postgres
-helm uninstall mongodb
+helm uninstall kano chirpstack redis postgres mongodb
 ```
+
+> [!WARNING]
+> The PVC will remains after uninstall, so if you really to free up space of test installation from scratch use `kubectl delete pvc` command
+> to delete the PVC.
 
 ### basic usage
 
@@ -70,7 +74,7 @@ Connect to the network server on minikube:
 minikube service chirpstack --url -n chirpstack-dev
 ```
 
-### backup postgreSQL
+### backup 'n restore postgreSQL data
 
 Chirpstack store all its configuration (gateway, sensors, users) in a postgresql database.
 If you need to reinstall the application or you delete the PVC, the database must be backup. 
@@ -79,6 +83,9 @@ Otherwise you will have to create again all the configuration.
 Backup is done by running a `pg_dump` command in the container.
 > [!WARNING]
 > If you have imported the LoraWan devices, the dump could be nearly 50MB uncompressed.
+
+> [!WARNING]
+> If you are deploying helmfile you should comment chirpstack to avoid concurrent access.
 
 The current archive is stored under `data/postgresql`.
 
@@ -92,7 +99,7 @@ kubectl cp postgres-postgresql-0:/bitnami/postgresql/dump.sql .
 ```
 
 
-Resore is done with psql command.
+Restore is done with psql command.
 ```shell
 kubectl cp dump.sql postgres-postgresql-0:/bitnami/postgresql
 kubectl exec -it postgres-postgresql-0 -- psql -U postgres -d chirpstack -f /bitnami/postgresql/dump.sql
@@ -193,5 +200,5 @@ The project is currently a testbed. Below are a list of the future steps:
 
   - [x] testing with a hardware gateway  
   - [X] include an integration to mongoDB
-  - [ ] integrate the Kalisio maps to view data
+  - [X] integrate the Kalisio maps to view data
   - [ ] protect all services with a Keycloak webportal
