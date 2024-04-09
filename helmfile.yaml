@@ -37,7 +37,7 @@ releases:
 - name: chirpstack
   namespace: demonstrator
   # TODO: replace the local use of chirpstack by pull a remote repo
-  chart: ./charts/chirpstack   
+  chart: kalisio/chirpstack  
   version: 0.0.3 
   values:
     - helmfileconfig/{{`{{ .Environment.Name }}`}}/chirpstack.yaml
