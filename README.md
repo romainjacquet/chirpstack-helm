@@ -123,6 +123,8 @@ The external services are :
   * UDP semtech port 1700
   * basic station 3001 (to be confirmed)
 
+### Data flow
+
 The data flows through different format along the traversal of the services:
 
   * UDP [binary protocol from Semtech](https://github.com/Lora-net/packet_forwarder/blob/master/PROTOCOL.TXT) when receiving gateway message
