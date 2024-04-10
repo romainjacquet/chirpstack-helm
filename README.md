@@ -85,7 +85,8 @@ Backup is done by running a `pg_dump` command in the container.
 > If you have imported the LoraWan devices, the dump could be nearly 50MB uncompressed.
 
 > [!WARNING]
-> If you are deploying helmfile you should comment chirpstack to avoid concurrent access.
+> If you are deploying with helmfile method you must make two deployment. First comment chirpstack chart to avoid concurrent access. Otherwise it could
+> results in error when starting Kano. And after uncomment all, and update the deployment.
 
 The current archive is stored under `data/postgresql`.
 
@@ -121,6 +122,14 @@ The external services are :
   * MQTT forwarder port 1883
   * UDP semtech port 1700
   * basic station 3001 (to be confirmed)
+
+The data flows through different format along the traversal of the services:
+
+  * UDP [binary protocol from Semtech](https://github.com/Lora-net/packet_forwarder/blob/master/PROTOCOL.TXT) when receiving gateway message
+  * [Protobuf](https://protobuf.dev/) messages in the MQTT bus and in the Redis stream
+  * [GeoJSON](https://datatracker.ietf.org/doc/html/rfc7946) messages in the mongoDB
+
+![Data Flow](/schemas/dataflow.png)
 
 ### Kubernetes infrastructure
 
