@@ -2,7 +2,7 @@
 
 global:
   # subdomain to be used when computing the ingress host
-  subdomain: "test.local"
+  subdomain: "test"
   # certIssuer to assign to the ingress cert-manager annotation
   certIssuer: ""
   # secret where to share sentitive environment variables
@@ -31,12 +31,13 @@ forceRestart: false
 
 service:
   enabled: true
-  type: NodePort # node for minikube until we use nginx-ingress
+  type:  ClusterIP 
   port: 8081                                                           
   annotations: {}
 
 ingress:
-  enabled: false
+  enabled: true
+  className: nginx
 
 distribution:
   # enabled specifies whether or not to use distribution
