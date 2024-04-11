@@ -1,5 +1,8 @@
 # chirpstack default values
 
+global:
+  # subdomain to be used when computing the ingress host
+  subdomain: ""
 
 env:
   fetch_lorawan_device: yes
@@ -31,6 +34,10 @@ env:
     appSecret: ""
     mapillaryToken: ""
     cesiumToken: ""
+# ingress
+ingress:
+  enabled: true
+  className: nginx
 
 images:
   kano_integration:
