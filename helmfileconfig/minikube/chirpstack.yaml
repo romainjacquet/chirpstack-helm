@@ -1,5 +1,10 @@
 # chirpstack values for minikube environment
 
+global:
+  # subdomain to be used when computing the ingress host
+  subdomain: "test"
+  certIssuer: ""
+
 env:  
   fetch_lorawan_device: no
   redis_password: VGhlUmVkaXNQd2Qh  # base 64 encoded
@@ -21,6 +26,7 @@ env:
     appSecret: "MyKanoSecret"
     mapillaryToken: ""
     cesiumToken: ""
+
 
 images:
   pullSecret: "kalisio-harbor"
