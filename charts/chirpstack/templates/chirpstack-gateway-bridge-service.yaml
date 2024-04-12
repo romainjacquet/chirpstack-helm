@@ -5,10 +5,14 @@ metadata:
     app.kubernetes.io/component: gateway-bridge
   name: chirpstack-gateway-bridge
 spec:
+  type: NodePort
   ports:
     - name: "1700"
       port: 1700
       protocol: UDP
       targetPort: 1700
+      {{- if .Values.env.bridge_station_node_port }}
+      nodePort: {{ .Values.env.bridge_station_node_port | default 1700 }}
+      {{- end }}
   selector:
     app.kubernetes.io/component: gateway-bridge
