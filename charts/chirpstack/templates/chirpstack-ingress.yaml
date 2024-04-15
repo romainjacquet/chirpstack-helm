@@ -25,24 +25,4 @@ spec:
                 name: chirpstack
                 port:
                   number: 8080
-    - host: basicstation.{{ .Values.global.subdomain }}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: chirpstack-gateway-bridge
-                port:
-                  number: 1700
-    - host: mqtt.{{ .Values.global.subdomain }}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: mosquitto
-                port:
-                  number: 1883
 {{- end }}
