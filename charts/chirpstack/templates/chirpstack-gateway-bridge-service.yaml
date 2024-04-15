@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/component: gateway-bridge
   name: chirpstack-gateway-bridge
 spec:  
-  type: LoadBalancer  
+  type: NodePort  
   ports:
     - name: "1700"
       port: 1700
