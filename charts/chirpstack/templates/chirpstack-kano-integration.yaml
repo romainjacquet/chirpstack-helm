@@ -20,6 +20,8 @@ spec:
           args:
             - chirpstack-stream-consumer.mjs  
           env:            
+            - name: CONFIG_FILE
+              value: /app/config/gatewayconfig.json
             - name: REDIS_HOST
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
@@ -50,11 +52,16 @@ spec:
               cpu: {{ .Values.resources.kano_integration.requests.cpu }}
               memory: {{ .Values.resources.kano_integration.requests.memory }}       
           ports:            
-          volumeMounts:       
+          volumeMounts: 
+            - name: config-volume
+              mountPath: /app/config      
       imagePullSecrets:
       - name: {{ .Values.images.pullSecret }}     
       restartPolicy: Always
       volumes:
+        - name: config-volume
+          configMap:
+            name: chirpstack-kano-integration
       
         
             
