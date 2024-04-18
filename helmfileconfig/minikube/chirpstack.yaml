@@ -25,8 +25,7 @@ env:
   kano_integration:
     appSecret: "MyKanoSecret"
     mapillaryToken: ""
-    cesiumToken: ""
-    grpc_host: "chirpstack:8080" 
+    cesiumToken: ""    
     grpc_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjaGlycHN0YWNrIiwiaXNzIjoiY2hpcnBzdGFjayIsInN1YiI6IjhhNjVjYmRhLTgyYzMtNGQ1MS05YzQ2LTBiN2NiMjU2MDRjOCIsInR5cCI6ImtleSJ9.JFal9wQB20pORaO8-ANffM1J8q-hozoj1r6pskohAKo"
 
 
