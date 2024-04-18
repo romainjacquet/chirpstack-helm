@@ -31,23 +31,10 @@ env:
     admin_password: $pbkdf2-sha512$i=10000,l=32$8+wkKPD+g1rhQ7LmDafdmQ$9CkcCerTUyUf3fSPtyKcKZ5BmZio/DvEZuvRxSvGtnc # PBKDB2 hash
 
   kano_integration:
-    # gateway configuration is a JSON object with:
-    # EUID as key (16 characters string)
-    # lat, lon (latitude, longitude) as values (numbers)
-    # desc (string with owner, place) also as value
-    # example:
-    # {
-    # "24e124fffef460b4": {
-    #   "lat": 43.600443297757835, 
-    #   "lon": 1.419038772583008, 
-    #   "desc": "MileSight GW (Romain)"},
-    # "0016c001f10fca1d":  {
-    #   "lat": 43.5781632, 
-    #   "lon": 1.4516224, 
-    #   "desc": "RaspBerry DIY GW (Adrien)"}
-    # }
-    gatewayConfig: ""
-    
+    # host that serve gRPC content, ex 'myhost:1111'
+    grpc_host:
+    # a very long string, can be found in the chirpstack portal (network server API)
+    grpc_token:    
     appSecret: ""
     mapillaryToken: ""
     cesiumToken: ""

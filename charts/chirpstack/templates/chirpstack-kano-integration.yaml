@@ -43,7 +43,11 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: chirp-secret
-                  key: mongo_password     
+                  key: mongo_password   
+            - name: GRPC_SERVER  
+              value: {{ .Values.env.kano_integration.grpc_host }}
+            - name: GRPC_TOKEN
+              value: {{ .Values.env.kano_integration.grpc_token }}
           resources:
             limits:
               cpu: {{ .Values.resources.kano_integration.limits.cpu }}
@@ -52,16 +56,11 @@ spec:
               cpu: {{ .Values.resources.kano_integration.requests.cpu }}
               memory: {{ .Values.resources.kano_integration.requests.memory }}       
           ports:            
-          volumeMounts: 
-            - name: config-volume
-              mountPath: /app/config      
+          volumeMounts:     
       imagePullSecrets:
       - name: {{ .Values.images.pullSecret }}     
       restartPolicy: Always
       volumes:
-        - name: config-volume
-          configMap:
-            name: chirpstack-kano-integration
-      
+
         
             

@@ -26,17 +26,9 @@ env:
     appSecret: "MyKanoSecret"
     mapillaryToken: ""
     cesiumToken: ""
-    gatewayConfig: |
-      {
-      "24e124fffef460b4": {
-        "lat": 43.600443297757835, 
-        "lon": 1.419038772583008, 
-        "desc": "MileSight GW (Romain)"},
-      "0016c001f10fca1d":  {
-        "lat": 43.5781632, 
-        "lon": 1.4516224, 
-        "desc": "RaspBerry DIY GW (Adrien)"}
-      }
+    grpc_host: "chirpstack:8080" 
+    grpc_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjaGlycHN0YWNrIiwiaXNzIjoiY2hpcnBzdGFjayIsInN1YiI6IjhhNjVjYmRhLTgyYzMtNGQ1MS05YzQ2LTBiN2NiMjU2MDRjOCIsInR5cCI6ImtleSJ9.JFal9wQB20pORaO8-ANffM1J8q-hozoj1r6pskohAKo"
+
 
 images:
   pullSecret: "kalisio-harbor"
