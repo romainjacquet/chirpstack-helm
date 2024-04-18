@@ -1,3 +1,4 @@
+{{- if .Values.env.rest_api.enable }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:  
@@ -33,3 +34,4 @@ spec:
               cpu: {{ .Values.resources.rest_api.requests.cpu }}
               memory: {{ .Values.resources.rest_api.requests.memory }}
       restartPolicy: Always
+{{- end }}

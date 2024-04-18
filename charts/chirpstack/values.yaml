@@ -38,6 +38,10 @@ env:
     appSecret: ""
     mapillaryToken: ""
     cesiumToken: ""
+
+  rest_api:
+    # set yes to enable the legacy REST API
+    enabled: no
 # ingress
 ingress:
   enabled: true
