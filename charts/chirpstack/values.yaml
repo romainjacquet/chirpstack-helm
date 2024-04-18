@@ -32,7 +32,7 @@ env:
 
   kano_integration:
     # host that serve gRPC content, ex 'myhost:1111'
-    grpc_host:
+    grpc_host: "chirpstack:8080" 
     # a very long string, can be found in the chirpstack portal (network server API)
     grpc_token:    
     appSecret: ""
