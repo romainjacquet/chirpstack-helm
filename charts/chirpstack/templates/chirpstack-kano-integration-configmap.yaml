@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: chirpstack-kano-integration
-data:  
-  gatewayconfig.json: {{ .Values.env.kano_integration.gatewayConfig | quote }}
