@@ -40,8 +40,16 @@ env:
     cesiumToken: ""
 
   keycloak:
+    enabled: no
     client_id: ""
     client_secret: ""
+    # related to OpenID urls
+    # ex: /realms/chirpstack
+    provider_url_path: ""
+    # ex: /auth/oidc/callback 
+    redirect_url_path: ""
+    # ex: /realms/chirpstack/protocol/openid-connect/logout
+    logout_url_path: ""
 
   rest_api:
     # set yes to enable the legacy REST API

@@ -1,6 +1,6 @@
 name: chirpstack
 description: A generated Helm Chart for the from Chirpstack
-version: 0.0.14
+version: 0.0.15
 apiVersion: v2
 keywords:
   - chirpstack
