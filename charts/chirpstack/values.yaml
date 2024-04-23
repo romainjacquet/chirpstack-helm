@@ -39,6 +39,10 @@ env:
     mapillaryToken: ""
     cesiumToken: ""
 
+  keycloak:
+    client_id: ""
+    client_secret: ""
+
   rest_api:
     # set yes to enable the legacy REST API
     enabled: no
