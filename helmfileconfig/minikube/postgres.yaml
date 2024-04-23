@@ -1,11 +1,8 @@
 # postgres values for minikube environment
-
-#default user and db
+# used by chirpstack for configuraiton and by Keycloak
+#default user postgres
 auth:
   postgresPassword: Root
-  username: chirpstack
-  password: chirpstack
-  database: chirpstack
 
 # persistance
 # 50 Mi are already taken at initial import for LoRaWAN devices
@@ -19,15 +16,26 @@ primary:
     requests:
       cpu: "100m" 
       memory: "128Mi" 
-      ephemeral-storage: "50Mi"
+      ephemeral-storage: "100Mi"
     limits:
       cpu: "150m" 
       memory: "192Mi"
       ephemeral-storage: "1024Mi"
   initdb:
     # required extensions for chirpstack
-    scripts:
-      001-chirpstack_extensions.sql: |
-        create extension pg_trgm;
-        create extension hstore;
+    scripts:      
+      002-keycloak.sql: |-
+        CREATE DATABASE keycloak;
+        \c keycloak;
+        CREATE USER keycloak WITH PASSWORD 'keycloak';
+        ALTER DATABASE keycloak OWNER TO keycloak;
+      001-chirpstack.sql: |-
+        CREATE DATABASE chirpstack;
+        \c chirpstack;
+        CREATE USER chirpstack WITH PASSWORD 'chirpstack';
+        ALTER DATABASE chirpstack OWNER TO chirpstack;
+        CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+        CREATE EXTENSION IF NOT EXISTS "hstore";
+
+
 

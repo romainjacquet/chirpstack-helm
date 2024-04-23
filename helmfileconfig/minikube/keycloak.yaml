@@ -1,0 +1,25 @@
+# keycloak values for minikube
+
+# use the existing postgresql
+postgresql:
+  enabled: false 
+externalDatabase:
+  host: postgres-postgresql
+  user: keycloak  
+  password: keycloak 
+  database: keycloak  
+  port: 5432 
+
+ingress:
+  enabled: true
+  hostname: keycloak.test
+  tls: true
+
+adminIngress:
+  enabled: true
+  hostname: keycloak-admin.test
+
+auth:
+  adminPassword: MyAdmin
+  managementPassword: MyManager
+  clusterDomain: test
