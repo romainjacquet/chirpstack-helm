@@ -30,8 +30,7 @@ env:
 
   # keycloak
   keycloak:
-    client_id: k-keycloack-chirpstack
-    client_secret: qFYAudPwE5IWDsGoaDdQeQyz1QU7WF01
+    enabled: no
 
 images:
   pullSecret: "kalisio-harbor"
