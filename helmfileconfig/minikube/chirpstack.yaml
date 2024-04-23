@@ -28,6 +28,10 @@ env:
     cesiumToken: ""    
     grpc_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjaGlycHN0YWNrIiwiaXNzIjoiY2hpcnBzdGFjayIsInN1YiI6IjhhNjVjYmRhLTgyYzMtNGQ1MS05YzQ2LTBiN2NiMjU2MDRjOCIsInR5cCI6ImtleSJ9.JFal9wQB20pORaO8-ANffM1J8q-hozoj1r6pskohAKo"
 
+  # keycloak
+  keycloak:
+    client_id: k-keycloack-chirpstack
+    client_secret: qFYAudPwE5IWDsGoaDdQeQyz1QU7WF01
 
 images:
   pullSecret: "kalisio-harbor"

@@ -55,8 +55,8 @@
     registration_enabled=false    
     registration_callback_url=""    
     provider_url="https://keycloak.{{ .Values.global.subdomain }}/auth/realms/chirpstack"
-    client_id="k-keycloack-chirpstack"
-    client_secret="qFYAudPwE5IWDsGoaDdQeQyz1QU7WF01"    
+    client_id="{{ .Values.env.keycloak.client_id }}"
+    client_secret="{{ .Values.env.keycloak.client_secret }}"    
     redirect_url="https://chirpstack.{{ .Values.global.subdomain }}/auth/oidc/callback"    
     logout_url=""
     login_redirect=false
