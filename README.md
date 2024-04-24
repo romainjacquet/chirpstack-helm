@@ -49,7 +49,6 @@ helm dependency build charts/chirpstack
 helm package charts/chirpstack
 helm install -f helmfileconfig/minikube/redis.yaml redis oci://registry-1.docker.io/bitnamicharts/redis
 helm install -f helmfileconfig/minikube/postgres.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql
-helm install -f helmfileconfig/minikube/keycloak.yaml keycloak oci://registry-1.docker.io/bitnamicharts/keycloak
 helm install -f helmfileconfig/minikube/mongodb.yaml mongodb  oci://registry-1.docker.io/bitnamicharts/mongodb
 helm install -f helmfileconfig/minikube/chirpstack.yaml chirpstack ./chirpstack-0.0.1.tgz
 helm install -f helmfileconfig/minikube/kano.yaml kano oci://harbor.portal.kalisio.com/kalisio/helm/kano
