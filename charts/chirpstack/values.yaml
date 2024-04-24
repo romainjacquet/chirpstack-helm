@@ -1,25 +1,50 @@
+# Copyright Kalisio
 # chirpstack default values
 
+## @section Global parameters
+## @param global.subdomain all the part of the FQDN except host
+## @param global.certIssuer to generate automatic certificate
+##
 global:
   # subdomain to be used when computing the ingress host
   subdomain: ""
+  certIssuer: ""
 
+## @section Authentication parameters
+## only passwords are managed, not user
+
+auth:
+  redis_password: ""
+  postgres_password: "pasword"
+  mongodb_password: ""  
+  grpc_token: ""   
+  ## @param auth.existingSecret Existing secret with Redis, postgres, mongo and GRPC parameters
+  ## NOTE: When it's set the previous parameters are ignored.
+  ##
+  existingSecret: "" 
+  existingSecretRedisPasswordKey: ""
+  existingSecretPostgresPasswordKey: ""
+  existingSecretMongoPasswordKey: ""
+  existingSecretGRPCTokenKey: ""
+
+## @section application parameters
 env:
+  ## @param env.fetch_lorawan_device download Lorawan devices from the internet, needed for installation from scratch
   fetch_lorawan_device: yes
 
   redis_host: "redis-master"
   redis_port: 6379
-  redis_password: "password"
+  
   
   postgres:
     host: postgres
     user: chirpstack
 
   # mongodDB
+  ## @param env.mongodb.clean delete data from mongodb
   mongodb:
     host: mongodb
-    user: chirpstack
-    password: chirpstack
+    user: chirpstack    
     db: kano
     clean: false    
 
@@ -32,14 +57,14 @@ env:
 
   kano_integration:
     # host that serve gRPC content, ex 'myhost:1111'
-    grpc_host: "chirpstack:8080" 
-    # a very long string, can be found in the chirpstack portal (network server API)
-    grpc_token:    
+    grpc_host: "chirpstack:8080"     
+    # kano parameters
     appSecret: ""
     mapillaryToken: ""
     cesiumToken: ""
 
   keycloak:
+    ## @param env.keycloak.enabled toggle keycloak authentication
     enabled: no
     client_id: ""
     client_secret: ""

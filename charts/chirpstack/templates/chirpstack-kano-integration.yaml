@@ -24,9 +24,15 @@ spec:
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
               valueFrom: 
+                {{- if not .Values.auth.existingSecret  }}
                 secretKeyRef:
                   name: chirp-secret
                   key: redis_password
+                {{- else}}
+                secretKeyRef:
+                  name: {{ .Values.auth.existingSecret }}
+                  key: {{ .Values.auth.existingSecretRedisPasswordKey }}
+                {{- end -}}
             {{- if .Values.env.mongodb.clean }}
             - name: MONGO_CLEAN
               value: "1"  
@@ -39,13 +45,28 @@ spec:
               value: {{ .Values.env.mongodb.host }}
             - name: MONGO_PASSWORD  
               valueFrom: 
+                {{- if not .Values.auth.existingSecret  }}
                 secretKeyRef:
                   name: chirp-secret
                   key: mongo_password   
+                {{- else }}
+                secretKeyRef:
+                  name: {{ .Values.auth.existingSecret }}
+                  key: {{ .Values.auth.existingSecretMongoPasswordKey }}
+                {{- end }}
             - name: GRPC_SERVER  
               value: {{ .Values.env.kano_integration.grpc_host }}
             - name: GRPC_TOKEN
-              value: {{ .Values.env.kano_integration.grpc_token }}
+              valueFrom:
+                {{- if not .Values.auth.existingSecret }}
+                secretKeyRef:
+                  name: chirp-secret
+                  key: grpc_token
+                {{- else }}
+                secretKeyRef:
+                  name: {{ .Values.auth.existingSecret }}
+                  key: {{ .Values.auth.existingSecretGRPCTokenKey }}
+                {{- end}}              
           resources:
             limits:
               cpu: {{ .Values.resources.kano_integration.limits.cpu }}

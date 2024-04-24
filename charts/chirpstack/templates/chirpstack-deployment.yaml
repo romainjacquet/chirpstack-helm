@@ -31,14 +31,26 @@ spec:
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
               valueFrom: 
-                secretKeyRef:
+                {{- if not .Values.auth.existingSecret }}
+                secretKeyRef:                  
                   name: chirp-secret
                   key: redis_password
+                {{- else }}
+                secretKeyRef:                  
+                  name: {{ .Values.auth.existingSecret }}
+                  key: {{ .Values.auth.existingSecretRedisPasswordKey }}
+                {{- end }}
             - name: POSTGRESQL_PASSWORD
               valueFrom: 
+                {{- if not .Values.auth.existingSecret }}              
                 secretKeyRef:
                   name: chirp-secret
                   key: postgresql_password
+                {{- else }}
+                secretKeyRef:                  
+                  name:  {{  .Values.auth.existingSecret }} 
+                  key: {{  .Values.auth.existingSecretPostgresPasswordKey }}
+                {{- end }}
           image: chirpstack/chirpstack:4
           name: chirpstack
           ports:
@@ -76,14 +88,26 @@ spec:
               value: {{ .Values.env.redis_host }}
             - name: REDIS_PASSWORD
               valueFrom: 
-                secretKeyRef:
+                {{- if not .Values.auth.existingSecret }}
+                secretKeyRef:                  
                   name: chirp-secret
                   key: redis_password
+                {{- else }}
+                secretKeyRef:                  
+                  name:  {{  .Values.auth.existingSecret  }} 
+                  key: {{  .Values.auth.existingSecretRedisPasswordKey }}
+                {{- end }}
             - name: POSTGRESQL_PASSWORD
               valueFrom: 
+                {{- if not .Values.auth.existingSecret }}              
                 secretKeyRef:
                   name: chirp-secret
                   key: postgresql_password
+                {{- else }}
+                secretKeyRef:                  
+                  name:  {{  .Values.auth.existingSecret  }} 
+                  key: {{  .Values.auth.existingSecretPostgresPasswordKey }}
+                {{- end }}
           securityContext:
             runAsUser: 0
           volumeMounts:
