@@ -51,6 +51,18 @@ spec:
                   name:  {{  .Values.auth.existingSecret }} 
                   key: {{  .Values.auth.existingSecretPostgresPasswordKey }}
                 {{- end }}
+            - name: CLIENT_ID              
+              value: {{ .Values.env.keycloak.client_id }}
+            - name: CLIENT_SECRET             
+                {{- if not .Values.auth.existingSecret }}              
+                secretKeyRef:
+                  name: chirp-secret
+                  key: keycloak_client_secret
+                {{- else }}
+                secretKeyRef:                  
+                  name:  {{  .Values.auth.existingSecret }} 
+                  key: {{  .Values.auth.existingSecretKeycloakClientSecretPasswordKey }}
+                {{- end }}
           image: chirpstack/chirpstack:4
           name: chirpstack
           ports:
@@ -107,7 +119,7 @@ spec:
                 secretKeyRef:                  
                   name:  {{  .Values.auth.existingSecret  }} 
                   key: {{  .Values.auth.existingSecretPostgresPasswordKey }}
-                {{- end }}
+                {{- end }}            
           securityContext:
             runAsUser: 0
           volumeMounts:

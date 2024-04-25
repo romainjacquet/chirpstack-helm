@@ -26,6 +26,7 @@ auth:
   existingSecretPostgresPasswordKey: ""
   existingSecretMongoPasswordKey: ""
   existingSecretGRPCTokenKey: ""
+  existingSecretKeycloakClientSecretPasswordKey: ""
 
 ## @section application parameters
 env:
