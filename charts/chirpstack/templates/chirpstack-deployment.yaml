@@ -54,6 +54,7 @@ spec:
             - name: CLIENT_ID              
               value: {{ .Values.env.keycloak.client_id }}
             - name: CLIENT_SECRET             
+              valueFrom: 
                 {{- if not .Values.auth.existingSecret }}              
                 secretKeyRef:
                   name: chirp-secret

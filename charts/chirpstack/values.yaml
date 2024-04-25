@@ -17,7 +17,8 @@ auth:
   redis_password: ""
   postgres_password: "pasword"
   mongodb_password: ""  
-  grpc_token: ""   
+  grpc_token: ""
+  keycloak_client_secret: ""   
   ## @param auth.existingSecret Existing secret with Redis, postgres, mongo and GRPC parameters
   ## NOTE: When it's set the previous parameters are ignored.
   ##
