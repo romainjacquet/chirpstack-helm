@@ -49,5 +49,7 @@ helm package charts/chirpstack
 
 This chart has been written to display LoraWAN data in [Kano](https://github.com/kalisio/kano), a data explorer in 2D/3D.
 Data management is done with [Chirpstack](https://www.chirpstack.io/), a popular LoraWAN network server.
-![Chripstack](/pictures/chirpstack-temperature.png)
+
+![Chirpstack](/pictures/chirpstack-temperature.png)
+
 This is part of R&D of Kalisio.
