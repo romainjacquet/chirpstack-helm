@@ -1,3 +1,4 @@
+{{ if .Values.env.mongodb_integration.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +16,7 @@ spec:
         app.kubernetes.io/component: kano-integration
     spec:
       containers:
-        - image: {{ .Values.images.kano_integration.registry }}/{{ .Values.images.kano_integration.repository }}:{{ .Values.images.kano_integration.tag }}
+        - image: {{ .Values.images.mongodb_integration.registry }}/{{ .Values.images.mongodb_integration.repository }}:{{ .Values.images.mongodb_integration.tag }}
           name: kano-integration
           args:
             - chirpstack-stream-consumer.mjs  
@@ -55,7 +56,7 @@ spec:
                   key: {{ .Values.auth.existingSecretMongoPasswordKey }}
                 {{- end }}
             - name: GRPC_SERVER  
-              value: {{ .Values.env.kano_integration.grpc_host }}
+              value: {{ .Values.env.mongodb_integration.grpc_host }}
             - name: GRPC_TOKEN
               valueFrom:
                 {{- if not .Values.auth.existingSecret }}
@@ -69,17 +70,17 @@ spec:
                 {{- end}}              
           resources:
             limits:
-              cpu: {{ .Values.resources.kano_integration.limits.cpu }}
-              memory: {{ .Values.resources.kano_integration.limits.memory }}
+              cpu: {{ .Values.resources.mongodb_integration.limits.cpu }}
+              memory: {{ .Values.resources.mongodb_integration.limits.memory }}
             requests:
-              cpu: {{ .Values.resources.kano_integration.requests.cpu }}
-              memory: {{ .Values.resources.kano_integration.requests.memory }}       
+              cpu: {{ .Values.resources.mongodb_integration.requests.cpu }}
+              memory: {{ .Values.resources.mongodb_integration.requests.memory }}       
           ports:            
           volumeMounts:     
       imagePullSecrets:
       - name: {{ .Values.images.pullSecret }}     
       restartPolicy: Always
       volumes:
-
+{{ end }}
         
             

@@ -54,13 +54,11 @@ env:
   mosquitto_node_port:
   networkserver_node_port:
 
-  kano_integration:
-    ## @param env.kano_integration.grpc_host that serve gRPC content, ex 'myhost:1111'
+  mongodb_integration:
+    ## @param env.mongodb_integration.enable: wether to deploy the mongo integration
+    enabled: yes
+    ## @param env.mongodb_integration.grpc_host that serve gRPC content, ex 'myhost:1111'
     grpc_host: "chirpstack:8080"     
-    # kano parameters
-    appSecret: ""
-    mapillaryToken: ""
-    cesiumToken: ""
 
   keycloak:
     ## @param env.keycloak.enabled toggle keycloak authentication
@@ -86,9 +84,9 @@ ingress:
   className: nginx
 
 images:
-  kano_integration:
+  mongodb_integration:
     registry: "harbor.portal.kalisio.com"
-    repository: "kalisio/chirpstack-kano-integration"
+    repository: "kalisio/chirpstack-mongodb-integration"
     tag: "latest"
   pullSecret: ""
 
@@ -122,7 +120,7 @@ resources:
     limits:
       cpu: "300m" 
       memory: "398Mi"
-  kano_integration:
+  mongodb_integration:
     requests:
       cpu: "100m" 
       memory: "128Mi"         
