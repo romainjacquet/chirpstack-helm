@@ -32,14 +32,14 @@ Check the default values with this command:
 helm show values oci://harbor.portal.kalisio.com/kalisio/helm/chirpstack
 ```
 
-## development
+## development
 
 To build a local archive of the chart:
 ```console
 helm package charts/chirpstack
 ```
 
-## limitations and warnings
+## limitations and warnings
 
   * it is currently mandatory to install the micro service to write in MongoDB. Future versions may separate it
   * the gateway bridge of chirpstack is exposing UDP service. It's not manage in the ingress, because configuration
