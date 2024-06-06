@@ -18,7 +18,13 @@ auth:
   postgres_password: "pasword"
   mongodb_password: ""  
   grpc_token: ""
+  ## NOTE: the three parameters below required keycloak enabled
+  ## @param auth.keycloak_client_secret secret for keycloak
   keycloak_client_secret: ""   
+  ## @param auth.registration_enabled allow login of users declared in keycloak 
+  registration_enabled: false
+  ## @param auth.registration_callback_url URL to manage the account creation in keycloak
+  registration_callback_url: ""
   ## @param auth.existingSecret Existing secret with Redis, postgres, mongo and GRPC parameters
   ## NOTE: When it's set the previous parameters are ignored.
   ##

@@ -51,9 +51,9 @@
   enabled="openid_connect"
   [user_authentication.openid_connect]
 
-    # Registration disabled.
-    registration_enabled=false    
-    registration_callback_url=""    
+    # Registration is enabled, it avoids having to also create the user in chirpstack (double creation)
+    registration_enabled={{ .Values.auth.registration_enabled }}
+    registration_callback_url={{ .Values.auth.registration_callback_url | quote }}
     provider_url="https://keycloak.{{ .Values.global.subdomain }}{{ .Values.env.keycloak.provider_url_path }}"
     client_id="$CLIENT_ID"
     client_secret="$CLIENT_SECRET"    
