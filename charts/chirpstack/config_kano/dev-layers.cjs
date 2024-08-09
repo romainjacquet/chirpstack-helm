@@ -172,7 +172,9 @@ module.exports = [
         BATTERY_LEVEL_LABEL: 'Taux de charge batterie',
         LAEQ: 'Niveau de pression acoustique continue',
         LAF: 'Niveau sonore avec Pondération Fréquentielle',
-        LAFMAX: 'Niveau Sonore Maximal avec Pondération Fréquentielle ' 
+        LAFMAX: 'Niveau Sonore Maximal avec Pondération Fréquentielle ',
+        CO2_LABEL : "Taux de CO2",
+        AIRPRESSURE_LABEL: "Pression atmosphérique"
       }        
     },
     en: {
@@ -195,7 +197,9 @@ module.exports = [
         BATTERY_LEVEL_LABEL: 'Battery level',
         LAEQ: 'Sound level A-weighted equivalent',
         LAF: 'Sound level A-weighted',
-        LAFMAX: 'Sound level A-weighted fast maximum'
+        LAFMAX: 'Sound level A-weighted fast maximum',
+        CO2_LABEL: "CO2 level",
+        AIRPRESSURE_LABEL: "Air pressure"
       }    
     }
   },
@@ -296,8 +300,32 @@ module.exports = [
       range: [0, 160],
       step: 1,
       chartjs: {
-        backgroundColor: 'rgba(79, 0, 35, 128)',
-        borderColor: 'rgb(79, 0, 35)',
+        backgroundColor: 'rgba(79, 132, 35, 128)',
+        borderColor: 'rgb(79, 132, 35)',
+        fill: false
+      }
+    },
+    {
+      name: 'co2',
+      label: 'Variables.CO2_LABEL',
+      unit: ['ppm'],
+      range: [0, 1000],
+      step: 1,
+      chartjs: {
+        backgroundColor: 'rgba(52, 124, 41, 128)',
+        borderColor: 'rgb(52, 124, 41)',
+        fill: false
+      }
+    },
+    {
+      name: 'air_pressure',
+      label: 'Variables.AIRPRESSURE_LABEL',
+      unit: ['hPa'],
+      range: [500, 2000],
+      step: 1,
+      chartjs: {
+        backgroundColor: 'rgba(67, 65, 62, 128)',
+        borderColor: 'rgb(67, 65, 62)',
         fill: false
       }
     }
